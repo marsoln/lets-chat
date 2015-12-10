@@ -1,26 +1,24 @@
-var express = require('express')
-  , app = express()
-  , mongoose = require('mongoose')
-  ;
+var express = require('express'),
+  app = express(),
+  mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test');
 
 var User = mongoose.model('Users', {
-  name: String
-  , age: Number
+  name: String,
+  age: Number
 });
 
-var createUser=(name,age)=>{
+var createUser = (name, age) => {
   var _user = new User({
     name: name,
     age: age
   });
 
-  _user.save((err)=> {
-    if(err){
+  _user.save((err) => {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log(`${_user.name} Saved...`);
     }
   });
@@ -34,32 +32,29 @@ app
 
   })
   .get('/data', (req, res) => {
-  'use strict'
+    'use strict'
     res.set({
-      'Content-Type': 'text/json'
-      , 'Encoding': 'utf8'
+      'Content-Type': 'text/json',
+      'Encoding': 'utf8'
     });
 
     User
       .find({
-        name:req.query.name
+        name: req.query.name
       })
       .select('name age friends')
       // .limit(1)
       // .select({friends:1})
-      .exec((err,users)=>{
+      .exec((err, users) => {
         console.log(users);
-        if(!err){
+        if (!err) {
           res.send(users)
-        }
-        else {
+        } else {
           res.send('error!')
         }
-      })
-      ;
+      });
 
   })
-  .listen(9000,(req,res)=>{
+  .listen(9000, (req, res) => {
     console.log('Server is running at port 9000.');
-  })
-;
+  });
