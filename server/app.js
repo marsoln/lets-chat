@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 
 var app = express();
 var Schema = mongoose.Schema;
-var apikeys = ['huoban123'];
 
 //mongoose.connect('mongodb://localhost/test');
 var db = mongoose.createConnection('localhost', 'test'); //创建一个数据库连接
@@ -27,7 +26,7 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    nickName: {
+    nickname: {
         type: String
     },
     avatar: {
@@ -60,7 +59,7 @@ var UserSchema = new Schema({
     address: {
         type: String
     },
-    createDate: {
+    createdate: {
         type: Date,
         default: Date.now()
     }
@@ -83,17 +82,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/api', function (req, res, next) {
-    var key = req.query['apikey'];
-    if (!key) {
-        return next(error(400, 'api key required'));
-    }
-    if (apikeys.indexOf(key) < 0) {
-        return next(error(401, 'invalid api key'));
-    }
-    next();
-});
-
 app.get('/api', function (req, res, next) {
     res.send({
         message: 'success',
@@ -109,7 +97,6 @@ app.get('/api', function (req, res, next) {
 
 //List
 app.get('/api/users', function (req, res, next) {
-    delete req.query.apikey;
     UserModel.find(req.query, function (err, docs) {
         if (!err) {
             res.send(docs);
