@@ -30,7 +30,8 @@ var UserSchema = new Schema({
         type: String
     },
     avatar: {
-        type: String
+        type: String,
+        default: 'https://resource-huobanyun-cn.alikunlun.com/3.1.142/content/images/avatar_default.jpg'
     },
     gender: {
         type: String,
