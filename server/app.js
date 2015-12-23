@@ -172,9 +172,7 @@ app.use(function (req, res) {
     res.send({error: "Not Found"});
 });
 
-if (!module.parent) {
-    app.listen(9000, function () {
-        console.log('Server started on port 9000');
-    });
-}
+app.listen(9000, function () {
+    console.log('Server started on port 9000');
+});
 
