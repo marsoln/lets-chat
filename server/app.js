@@ -1,6 +1,7 @@
 var express = require('express'),
   app = express(),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  bodyParser = require('body-parser');
 
 var Schema = mongoose.Schema;
 
