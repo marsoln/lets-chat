@@ -68,6 +68,22 @@ var UserSchema = new Schema({
 
 var UserModel = db.model('User', UserSchema);
 
+function createUser(num) {
+    num = num || 100;
+    for (var i = 0; i < num; i++) {
+        UserModel.create({
+            name: 'Example' + i,
+            nickname: 'Super丶man',
+            age: 22,
+            gender: '男',
+            city: '青岛'
+        }, function (err) {
+            console.log(err);
+        });
+    }
+}
+
+
 function error(status, msg) {
     var err = new Error(msg);
     err.status = status;
@@ -77,6 +93,9 @@ function error(status, msg) {
 app.use(bodyParser());
 
 app.use(function (req, res, next) {
+    if (UserModel.count < 10) {
+        createUser();
+    }
     //res.set({'Content-Type':'text/json','Encodeing':'utf8'});
     res.header('Content-Type', 'application/json; charset=utf-8');
     res.header('X-Powered-By', '4.13.3');
