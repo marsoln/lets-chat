@@ -78,7 +78,9 @@ function createUser(num) {
             gender: '男',
             city: '青岛'
         }, function (err) {
-            console.log(err);
+            if (err) {
+                console.log(err);
+            }
         });
     }
 }
@@ -92,9 +94,11 @@ function error(status, msg) {
 app.use(bodyParser());
 
 app.use(function (req, res, next) {
-    if (UserModel.count < 10) {
-        createUser();
-    }
+    UserModel.count({}, function (err, count) {
+        if (!err && count < 10) {
+            createUser();
+        }
+    });
     //res.set({'Content-Type':'text/json','Encodeing':'utf8'});
     res.header('Content-Type', 'application/json; charset=utf-8');
     res.header('X-Powered-By', '4.13.3');
