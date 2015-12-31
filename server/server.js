@@ -8,8 +8,6 @@ var express = require('express'),
 app
   //静态资源
   .use(express.static(__dirname + '/../public'))
-  .use(express.static(__dirname + '/../scripts'))
-  .use(express.static(__dirname + '/../styles'))
   .use(bodyParser())
   .use(function (req, res, next) {
     res.header('Content-Type', 'application/json; charset=utf-8');

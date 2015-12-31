@@ -1,5 +1,5 @@
 var db = require('../../framework/dbProviders/mongoProvider').openConnection(),
-  UserSchema = require('../../core/schemas/user/userDemoSchema'),
+  UserSchema = require('../../core/Schemas/userDemoSchema'),
   UserModel = db.model('User', UserSchema)
   ;
 
@@ -76,6 +76,5 @@ var exportsApi = function (app) {
   });
 
 };
-
 
 module.exports = exportsApi;

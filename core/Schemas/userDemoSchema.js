@@ -2,6 +2,7 @@
  * demo user schema
  */
 var Schema = require('mongoose').Schema;
+
 var UserSchema = new Schema({
   name: {
     type: String,
@@ -46,4 +47,6 @@ var UserSchema = new Schema({
     'default': Date.now()
   }
 });
+
+
 module.exports = UserSchema;

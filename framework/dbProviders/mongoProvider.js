@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var propReader = require('properties-reader')('server.properties');
+var mongoose = require('mongoose'),
+  propReader = require('properties-reader')('server.properties')
+  ;
 
 module.exports = {
   /**

@@ -2,6 +2,7 @@ module.exports = function (server) {
   var io = require('socket.io')(server),
     numUsers = 0
     ;
+
   io.on('connection', function (socket) {
     var addedUser = false;
 
