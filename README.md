@@ -16,5 +16,3 @@
   - 添加server.properties配置文件
   - 添加依赖properties-reader,socket-io
   - 添加即时通讯功能
-   
-
