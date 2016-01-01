@@ -1,4 +1,4 @@
-const PORT = 9000;
+const PORT = 80;
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
@@ -41,23 +41,23 @@ app
 /**
  * web api infomation
  */
-app.get('/api', function (req, res) {
-  res.send({
-    message: 'success',
-    links: {
-      'list': 'GET /api/users',
-      'get': 'GET /api/users/id',
-      'create': 'POST /api/users',
-      'update': 'PUT /api/users/id',
-      'delete': 'DELETE /api/users/id'
-    }
-  });
-});
+//app.get('/api', function (req, res) {
+//  res.send({
+//    message: 'success',
+//    links: {
+//      'list': 'GET /api/users',
+//      'get': 'GET /api/users/id',
+//      'create': 'POST /api/users',
+//      'update': 'PUT /api/users/id',
+//      'delete': 'DELETE /api/users/id'
+//    }
+//  });
+//});
 
 //暴露demoUser的api
-require('./restfulApi/demoUserApi')(app);
+//require('./restfulApi/demoUserApi')(app);
 //启动socketService
-require('./socketService')(server);
+require('./socketServer/bootstrap')(server);
 
 server.listen(PORT, ()=> {
   console.log(`socket server listened on ${PORT}`);
