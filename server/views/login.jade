@@ -1,0 +1,24 @@
+extends _layout
+block content
+  body.hold-transition.login-page
+    .container
+      .login-logo
+        a
+          span.text-danger.animated.bounceInDown <strong>Marsoln</strong>'s exLab
+      .login-box-body
+        form(method='post',action='/login')
+          p.text-red #{error}
+          .form-group.has-feedback
+            input.form-control(type='text',name='username',placeholder='Username')
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password',name='password',placeholder='Password')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .text-center.well.text-bold.text-warning
+            p 如果是初次登录,请记好你的密码
+            p 因为这里没有注册,如果你忘记了自己的密码
+            p 那么恭喜你,根本更没有密码找回功能
+            p 哈哈哈哈...
+          .row
+            .col-xs-12
+              button.btn.btn-success.btn-block ( =w=) <strong>凸</strong>

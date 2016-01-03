@@ -1,64 +1,72 @@
-const PORT = 80;
-var express = require('express'),
-  app = express(),
-  bodyParser = require('body-parser'),
-  server = require('http').createServer(app)
-  ;
+var _port = process.env.PORT || 80;
+var express = require('express');
+var app = express();
+var path = require('path');
+var server = require('http').createServer(app);
+var socketServerBootstrap = require('./socketServer/bootstrap');
+var sessionModule = require('../framework/redis/session');
+//-------
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+//-------
+var userRoutes = require('./routes/demoUsers');
+var indexRoutes = require('./routes/index');
+var loginRoutes = require('./routes/login');
 
-app
-  //静态资源
-  .use(express.static(__dirname + '/../public'))
-  .use(bodyParser())
-  .use(function (req, res, next) {
-    res.header('Content-Type', 'application/json; charset=utf-8');
-    res.header('X-Powered-By', '4.13.3');
-    next();
-  })
-  .use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.send({
-      error: err.message
-    });
-    next();
-  })
-  .use(function (err, req, res, next) {
-    res.status(404);
-    res.send({
-      error: "Not Found"
-    });
-    next();
-  })
-  //.all('*', function (req, res, next) {
-  //  res.header("Access-Control-Allow-Origin", "*");
-  //  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  //  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-  //  res.header("X-Powered-By", ' 3.2.1')
-  //  res.header("Content-Type", "application/json;charset=utf-8");
-  //  next();
-  //})
-;
+//--view engine--
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
-/**
- * web api infomation
- */
-//app.get('/api', function (req, res) {
-//  res.send({
-//    message: 'success',
-//    links: {
-//      'list': 'GET /api/users',
-//      'get': 'GET /api/users/id',
-//      'create': 'POST /api/users',
-//      'update': 'PUT /api/users/id',
-//      'delete': 'DELETE /api/users/id'
-//    }
-//  });
-//});
-
-//暴露demoUser的api
-//require('./restfulApi/demoUserApi')(app);
+//--filters--
+app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(__dirname + '/../public'));
+app.use(favicon(__dirname + '/../public/favicon.ico'));
+app.use(cookieParser());
+app.use(sessionModule.registry);
+app.use((req, res, next)=> {
+  "use strict";
+  if (!req.session) {
+    return next(new Error('session missed.'))
+  }
+  next()
+});
+//--routes--
+app.use('/login', loginRoutes);
+app.use('/', indexRoutes);
+app.use('/users', userRoutes);
+//--debug--
+//app.use(logger('dev'));
+app.use(require('./siteFilters/notFound'));
+app.use(require('./siteFilters/serverError'));
 //启动socketService
-require('./socketServer/bootstrap')(server);
+socketServerBootstrap(server);
 
-server.listen(PORT, ()=> {
-  console.log(`socket server listened on ${PORT}`);
+server.on('error', function (error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof _port === 'string'
+    ? 'Pipe ' + _port
+    : 'Port ' + _port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+});
+server.listen(_port, ()=> {
+  console.log(`socket server listened on ${_port}`);
 });

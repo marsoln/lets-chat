@@ -4,7 +4,15 @@
 var Schema = require('mongoose').Schema;
 
 var UserSchema = new Schema({
-  name: {
+  username: {
+    type: String,
+    required: true
+  },
+  salt: {
+    type: String,
+    required: true
+  },
+  hash: {
     type: String,
     required: true
   },
@@ -47,6 +55,5 @@ var UserSchema = new Schema({
     'default': Date.now()
   }
 });
-
 
 module.exports = UserSchema;

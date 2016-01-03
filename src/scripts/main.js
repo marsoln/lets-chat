@@ -1,6 +1,160 @@
 angular
   .module('chatApp', [])
-  .controller('chatCtrl', ['$scope', function (scope) {
+  .factory('nameGenerator', function () {
+    var _names = [
+      "伯毅",
+      "节都",
+      "另林",
+      "逐天",
+      "逐日",
+      "昊祯",
+      "昊天",
+      "龙恩",
+      "炎恩",
+      "鸿恩",
+      "希文",
+      "希诚",
+      "玄华",
+      "玄晋",
+      "元贞",
+      "伸义",
+      "巴莫",
+      "子烨",
+      "子龙",
+      "子赫",
+      "圣卿",
+      "尚儒",
+      "水哲",
+      "祺祾",
+      "祾祯",
+      "焜煊",
+      "施祁",
+      "善琦",
+      "垚丞",
+      "兴尧",
+      "可尧",
+      "炫琰",
+      "家宇",
+      "子骞",
+      "峻熙",
+      "嘉懿",
+      "煜城",
+      "懿轩",
+      "烨华",
+      "煜祺",
+      "智宸",
+      "正豪",
+      "昊然",
+      "志泽",
+      "明杰",
+      "弘文",
+      "烨伟",
+      "苑博",
+      "鹏涛",
+      "炎彬",
+      "鹤轩",
+      "伟泽",
+      "君昊",
+      "熠彤",
+      "鸿煊",
+      "博涛",
+      "苑杰",
+      "黎昕",
+      "烨霖",
+      "哲瀚",
+      "雨泽",
+      "楷瑞",
+      "建辉",
+      "致远",
+      "俊驰",
+      "雨泽",
+      "烨磊",
+      "国豪",
+      "伟奇",
+      "文博",
+      "天佑",
+      "文昊",
+      "修杰",
+      "黎昕",
+      "远航",
+      "旭尧",
+      "英杰",
+      "圣杰",
+      "俊楠",
+      "鸿涛",
+      "伟祺",
+      "荣轩",
+      "浩宇",
+      "晋鹏",
+      "静香",
+      "梦洁",
+      "凌薇",
+      "美莲",
+      "雅静",
+      "雪丽",
+      "依娜",
+      "雅芙",
+      "雨婷",
+      "晟涵",
+      "梦舒",
+      "秀影",
+      "海琼",
+      "雪娴",
+      "梦梵",
+      "笑薇",
+      "瑾梅",
+      "晟楠",
+      "歆婷",
+      "思颖",
+      "欣然",
+      "可岚",
+      "天瑜",
+      "婧琪",
+      "媛馨",
+      "玥婷",
+      "滢心",
+      "雪馨",
+      "姝瑗",
+      "颖娟",
+      "歆瑶",
+      "凌菲",
+      "钰琪",
+      "婧宸",
+      "靖瑶",
+      "瑾萱",
+      "佑怡",
+      "婳祎",
+      "檀雅",
+      "若翾",
+      "熙雯",
+      "语嫣",
+      "妍洋",
+      "滢玮",
+      "沐卉",
+      "琪涵",
+      "佳琦",
+      "伶韵",
+      "思睿",
+      "清菡",
+      "欣溶",
+      "菲絮",
+      "诗涵",
+      "璇滢",
+      "静馨",
+      "妙菱",
+      "心琪",
+      "雅媛",
+      "晨芙",
+      "婧诗",
+      "露雪",
+      "蕊琪",
+      "舒雅"
+    ];
+    return function () {
+      return _names[Math.floor(Math.random() * _names.length)];
+    }
+  })
+  .controller('chatCtrl', ['$scope', 'nameGenerator', '$timeout', function (scope, nameGenerator, $timeout) {
     const TYPING_TIMER_LENGTH = 600;
     var socket = io();
     var connected = false;
@@ -25,15 +179,17 @@ angular
         }, TYPING_TIMER_LENGTH);
       }
     };
-    $(window).keydown(function (event) {
+
+
+    scope.keydownHandler = function (event) {
       if (!(event.ctrlKey || event.metaKey || event.altKey)) {
         $inputMessage.focus();
       }
       if (event.which === 13) {
         scope.sendMessage();
-        scope.$digest();
       }
-    });
+    };
+
     $inputMessage.on('input', function () {
       updateTyping();
     });
@@ -48,7 +204,10 @@ angular
       scope.$digest();
     });
     socket.on('new message', function (message) {
-      scope.viewData.chatQueue.unshift(message);
+      scope.viewData.chatQueue.push(message);
+      $timeout(function () {
+        $('.direct-chat-messages').scrollTop(99999);
+      }, 1);
       scope.$digest();
     });
     socket.on('user joined', function (data) {
@@ -76,17 +235,18 @@ angular
       scope.$digest();
     });
 
-
-    scope.currentUser = {
-      name: 'ShitEater'
-      , avatar: '/images/avatar_default.jpg'
+    scope.chatroom = {
+      name: '食堂开门了,冲!'
     };
+
+    scope.currentUser = __currentUser;
 
     scope.viewData = {
       messages: [],
       notifications: [],
       chatQueue: [],
       logInfo: [],
+      contactQueue: [],
       sendContent: '',
       numUsers: 1
     };
@@ -96,9 +256,13 @@ angular
     };
 
     scope.removeLog = function (id) {
-      var _index = scope.viewData.logInfo.findIndex(function (log) {
-        return log['_id'] == id;
-      });
+      var _index = 0;
+      while (_index < scope.viewData.logInfo.length) {
+        if (scope.viewData.logInfo[_index]['_id'] === id) {
+          break;
+        }
+        _index++;
+      }
       if (_index > -1) {
         scope.viewData.logInfo.splice(_index, 1);
       }
@@ -122,8 +286,12 @@ angular
         message.isMine = true;
         message.sender = scope.currentUser;
         message.createTime = new Date();
-        scope.viewData.chatQueue.unshift(message);
+        scope.viewData.chatQueue.push(message);
         scope.viewData.sendContent = '';
+        $inputMessage.blur();
+        $timeout(function () {
+          $('.direct-chat-messages').scrollTop(99999);
+        }, 1);
       } else {
         $.warning('发送内容不能为空!');
       }

@@ -1,0 +1,98 @@
+extends _layout
+block content
+  body.skin-blue.sidebar-mini(data-ng-cloak="",data-ng-app="chatApp")
+    .wrapper(data-ng-controller="chatCtrl",data-ng-keydown="keydownHandler($event)")
+      header.main-header
+        a.logo
+          span.logo-mini(style='font-size:12px') ( =w=)
+          span.logo-lg (╯‵□′)╯︵┻━┻
+        nav.navbar.navbar-static-top(role='navigation')
+          a.sidebar-toggle(data-toggle='offcanvas',role='button')
+            span.sr-only Oops...
+          .navbar-custom-menu
+            ul.nav.navbar-nav
+              li.dropdown.messages-menu
+                a.dropdown-toggle(data-toggle='dropdown')
+                  i.fa.fa-envelope-o
+                  span.label.label-success(data-ng-if='viewData.message.length') {{viewData.messages.length}}
+                ul.dropdown-menu
+                  li.header 你有{{viewData.messages.length||'0'}}条信息
+                  li
+                    ul.menu
+                      li(data-ng-repeat='message in viewData.messages track by $index')
+                        a
+                        .pull-left
+                          img.img-circle(data-ng-src='message.sender.avatar')
+                        h4 {{message.title}}<small><i class="fa fa-clock-o"></i>{{message.createTime}}</small>
+                        p {{message.content}}
+                  li.footer
+                    a 查看所有信息
+              li.dropdown.notifications-menu
+                a.dropdown-toggle(data-toggle='dropdown')
+                  i.fa.fa-bell-o
+                  span.label.label-warning(data-ng-if='viewData.notifications.length') {{viewData.notifications.length}}
+                ul.dropdown-menu
+                  li.header 你有{{viewData.notifications.length||'0'}}条系统通知
+                  li
+                    ul.menu
+                      li(data-ng-repeat='notification in viewData.notifications track by $index')
+                        a <i class="fa {{notification.icon}} text-aqua"></i> {{notification.content}}
+                  li.footer
+                    a 查看所有
+      aside.main-sidebar
+        section.sidebar(style='height:auto')
+          .user-panel
+            .pull-left.image
+              img.img-circle(data-ng-src="{{currentUser.avatar}}")
+            .pull-left.info
+              p {{currentUser.name}}
+              a
+                i.fa.fa-circle.text-success
+                | online
+      .content-wrapper
+        #warningPanel.callout.callout-warning(style='display:none')
+          h4 警告!
+          span.warning-content 不能发送空内容
+        section.content.container.row
+          .col-xs-12
+            .box.box-info.direct-chat.direct-chat-info
+              .box-header.with-border
+                h3.box-title {{chatroom.name}} (当前在线:{{viewData.numUsers}})
+                .log-container
+                  code(data-ng-repeat="log in viewData.logInfo") {{log.content}}
+                .box-tools.pull-right
+                  button.btn.btn-box-tool(data-placement="left",data-toggle="tooltip",title="私聊",data-widget="chat-pane-toggle")
+                    i.fa.fa-comments
+              .box-body
+                .direct-chat-messages
+                  .direct-chat-msg.animated.slideInUp(data-ng-class="{right:!chatItem.isMine}",data-ng-repeat='chatItem in viewData.chatQueue track by $index')
+                    img.direct-chat-img(data-ng-src="{{chatItem.sender.avatar}}")
+                    span.direct-chat-name.pull-right(data-ng-if="!chatItem.isMine",style="line-height: 2.5rem;padding: 5px;") {{chatItem.sender.name}}
+                    .direct-chat-text {{chatItem.message}}
+                    .direct-chat-info.clearfix
+                      span.direct-chat-timestap(data-ng-class="{'pull-right':chatItem.isMine,'pull-left':!chatItem.isMine}") {{chatItem.createTime|date:'yyyy-MM-dd hh:mm'}}
+                .direct-chat-contacts
+                  ul.contacts-list
+                    li(data-ng-if='viewData.contactQueue.length==0') (′・ω・`) 没人勾搭你
+                    li(data-ng-repeat='contact in viewData.contactQueue track by $index')
+                      a
+                        img.contacts-list-img(data-ng-src='contact.sender.avatar')
+                        div.contacts-list-info
+                          span.contacts-list-name {{contact.sender.name}}<small class="contacts-list-date pull-right">{{contact.createTime}}</small>
+              .box-footer
+                .input-group
+                  input.form-control(type="text",placeholder="say hello to others...",data-ng-model="viewData.sendContent")
+                  span.input-group-btn
+                    button.btn.btn-success.btn-flat(data-ng-click='sendMessage()') (╭￣3￣)╭<span class="text-blue" >♡</span>
+      .main-footer <strong>Copyright &copy; 2015 <a href="http://github.com/marsoln">Marsoln</a>.</strong> All rights reserved.
+    script(src="lib/jquery-1.10.2.min.js")
+    script(src="lib/angular.min.js")
+    script(src="socket.io/socket.io.js")
+    script.
+      __currentUser = {
+        name: '#{username}',
+        avatar: '#{avatar}'
+      };
+    script(src="lib/bootstrap.min.js")
+    script(src="lib/lte.min.js")
+    script(src="dist/scripts/main.min.js")
