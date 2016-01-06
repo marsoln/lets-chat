@@ -16,3 +16,7 @@
   - 添加server.properties配置文件
   - 添加依赖properties-reader,socket-io
   - 添加即时通讯功能
+- 1.2 代码质量工具和问题修复
+  - 添加eslint
+  - 修复应用开启会打开两个数据库连接的问题
+  - 添加graffiti(但是没有跑起来)

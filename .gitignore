@@ -1,4 +1,6 @@
 /node_modules
 /.idea
-/data
 *.xml
+/.sass-cache
+/demo
+npm-debug.log

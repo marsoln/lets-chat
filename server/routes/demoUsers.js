@@ -1,6 +1,4 @@
-var db = require('../../framework/dbProviders/mongoProvider').openConnection();
-var UserSchema = require('../../core/Schemas/userDemoSchema');
-var UserModel = db.model('User', UserSchema);
+var UserModel = require('../../core/model/demoUser');
 var router = require('express').Router();
 var authentication = require('../siteFilters/authentication');
 var contentTypes = require('../siteFilters/contentTypes');

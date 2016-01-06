@@ -1,9 +1,9 @@
 /**
  * demo user schema
  */
-var Schema = require('mongoose').Schema;
-
-var UserSchema = new Schema({
+var mongoose = require('mongoose');
+var connection = require('../../framework/dbProviders/mongoProvider').connection;
+const UserSchema = mongoose.Schema({
   username: {
     type: String,
     required: true
@@ -55,5 +55,6 @@ var UserSchema = new Schema({
     'default': Date.now()
   }
 });
+const User = connection.model('User', UserSchema);
 
-module.exports = UserSchema;
+module.exports = User;

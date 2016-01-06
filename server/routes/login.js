@@ -3,9 +3,7 @@ var contentTypes = require('../siteFilters/contentTypes');
 var securityPass = require('../../framework/security/pass');
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-var db = require('../../framework/dbProviders/mongoProvider').openConnection();
-var UserSchema = require('../../core/schemas/userDemoSchema');
-var UserModel = db.model('User', UserSchema);
+var UserModel = require('../../core/model/demoUser');
 var __authenticate = (name, pass, fn) => {
   'use strict';
   console.log(`验证用户${name}身份..`);
@@ -21,13 +19,13 @@ var __authenticate = (name, pass, fn) => {
         } else {
           return fn(new Error('密码错误.'));
         }
-      })
+      });
     } else {
       //用户尚未注册 使用用户名作为盐加密密码
       securityPass.hash(pass, (err, salt, hash)=> {
         if (err) {
           //加密密码失败
-          fn(err, null)
+          fn(err, null);
         } else {
           //加密成功 存储用户数据
           var user = {
@@ -46,7 +44,7 @@ var __authenticate = (name, pass, fn) => {
             }
           });
         }
-      })
+      });
     }
   });
 };

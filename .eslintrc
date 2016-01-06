@@ -1,0 +1,20 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jquery": true
+  },
+  "globals": {
+    "angular": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "forOf": true,
+    "jsx": false
+  },
+  "rules": {
+    "semi": 2
+  }
+}

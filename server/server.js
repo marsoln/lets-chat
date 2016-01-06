@@ -5,6 +5,10 @@ var path = require('path');
 var server = require('http').createServer(app);
 var socketServerBootstrap = require('./socketServer/bootstrap');
 var sessionModule = require('../framework/redis/session');
+var graffiti = require('@risingstack/graffiti');
+//Error regeneratorRuntime is not defined
+//var getSchema = require('@risingstack/graffiti-mongoose').getSchema;
+var User = require('../core/model/demoUser');
 //-------
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -18,20 +22,21 @@ var loginRoutes = require('./routes/login');
 //--view engine--
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-//--filters--
-app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../public'));
 app.use(favicon(__dirname + '/../public/favicon.ico'));
+//--filters--
+app.use(bodyParser.json());
+//app.use(graffiti.express({
+//  schema: getSchema([User])
+//}));
+//app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(sessionModule.registry);
-app.use((req, res, next)=> {
-  "use strict";
+app.use(function (req, res, next) {
   if (!req.session) {
-    return next(new Error('session missed.'))
+    return next(new Error('session missed.'));
   }
-  next()
+  next();
 });
 //--routes--
 app.use('/login', loginRoutes);
@@ -44,7 +49,7 @@ app.use(require('./siteFilters/serverError'));
 //启动socketService
 socketServerBootstrap(server);
 
-server.on('error', function (error) {
+server.on('error', (error) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
