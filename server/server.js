@@ -5,10 +5,6 @@ var path = require('path');
 var server = require('http').createServer(app);
 var socketServerBootstrap = require('./socketServer/bootstrap');
 var sessionModule = require('../framework/redis/session');
-var graffiti = require('@risingstack/graffiti');
-//Error regeneratorRuntime is not defined
-//var getSchema = require('@risingstack/graffiti-mongoose').getSchema;
-var User = require('../core/model/demoUser');
 //-------
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -26,13 +22,12 @@ app.use(express.static(__dirname + '/../public'));
 app.use(favicon(__dirname + '/../public/favicon.ico'));
 //--filters--
 app.use(bodyParser.json());
-//app.use(graffiti.express({
-//  schema: getSchema([User])
-//}));
-//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(sessionModule.registry);
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   if (!req.session) {
     return next(new Error('session missed.'));
   }
@@ -54,9 +49,7 @@ server.on('error', (error) => {
     throw error;
   }
 
-  var bind = typeof _port === 'string'
-    ? 'Pipe ' + _port
-    : 'Port ' + _port;
+  var bind = typeof _port === 'string' ? 'Pipe ' + _port : 'Port ' + _port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -72,6 +65,6 @@ server.on('error', (error) => {
       throw error;
   }
 });
-server.listen(_port, ()=> {
+server.listen(_port, () => {
   console.log(`socket server listened on ${_port}`);
 });
