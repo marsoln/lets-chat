@@ -1,8 +1,8 @@
 /**
  * demo user schema
  */
-var mongoose = require('mongoose');
-var connection = require('../../framework/dbProviders/mongoProvider').connection;
+var mongoose = require('mongoose')
+var connection = require('../../framework/dbProviders/mongoProvider').connection
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
@@ -54,7 +54,7 @@ const UserSchema = mongoose.Schema({
     type: Date,
     'default': Date.now()
   }
-});
-const User = connection.model('User', UserSchema);
+})
+const User = connection.model('User', UserSchema)
 
-module.exports = User;
+module.exports = User

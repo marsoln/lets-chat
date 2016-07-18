@@ -3,8 +3,9 @@
  * @returns {Function}
  */
 module.exports = function (err, req, res, next) {
-  res.status(404);
+  console.log(err)
+  res.status(404)
   res.send({
-    error: "Not Found"
-  });
-};
+    error: 'Not Found'
+  })
+}

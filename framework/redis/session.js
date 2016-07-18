@@ -1,6 +1,6 @@
-var session = require('express-session');
-var redisStore = require('connect-redis')(session);
-var client = require('./base');
+var session = require('express-session')
+var RedisStore = require('connect-redis')(session)
+var client = require('./base')
 
 /**
  * register the redis-session-storage middleware for the server application
@@ -8,12 +8,12 @@ var client = require('./base');
  */
 exports.registry = session({
   name: 's',
-  store: new redisStore({
+  store: new RedisStore({
     client: client,
-    //url: 'redis://127.0.0.1:6379',
-    prefix: 'RS'  //redis session
+    // url: 'redis://127.0.0.1:6379',
+    prefix: 'RS'  // redis session
   }),
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: false
-});
+})
