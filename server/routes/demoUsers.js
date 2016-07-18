@@ -13,7 +13,7 @@ router.use(authentication)
 router.get('/', function (req, res, next) {
   UserModel.find(req.query, function (err, docs) {
     if (!err) {
-      res.send(docs)
+      res.send(docs.toJson())
     } else {
       next(err)
     }

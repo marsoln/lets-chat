@@ -4,10 +4,11 @@
  * @param res
  * @param next
  */
-module.exports = (req, res, next)=> {
-  if (req.session.user) {
+module.exports = (req, res, next) => {
+  if (req.session.user || req.url === '/register') {
     next()
-  } else {
+  }
+  else {
     console.log(`access denied for ${req.session.id}.`)
     res.redirect('/login')
   }

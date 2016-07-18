@@ -12,6 +12,7 @@ var bodyParser = require('body-parser')
 var userRoutes = require('./routes/demoUsers')
 var indexRoutes = require('./routes/index')
 var loginRoutes = require('./routes/login')
+var registerRoutes = require('./routes/register')
 
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
@@ -25,7 +26,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cookieParser())
 app.use(sessionModule.registry)
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   if (!req.session) {
     return next(new Error('session missed.'))
   }
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 app.use('/login', loginRoutes)
 app.use('/', indexRoutes)
 app.use('/users', userRoutes)
+app.use('/register', registerRoutes)
 // --debug--
 // app.use(logger('dev'))
 app.use(require('./siteFilters/notFound'))
