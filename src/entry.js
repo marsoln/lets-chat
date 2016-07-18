@@ -9,5 +9,4 @@ require('admin-lte')
 require('angular')
 import ngBootstrap from './scripts/main'
 
-
 ngBootstrap()

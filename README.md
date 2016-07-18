@@ -22,4 +22,8 @@
 - 1.3 更改开发环境配置
   - 将gulp-ruby-sass切换为node-sass
   - 添加webpack
-    - 取消了开发时的gulp-watch,取而代之的是webpack在启动服务器时打包生成hash文件,由服务器在渲染时替换变量
+    - 取消了开发时针对js文件的gulp-watch,取而代之的是webpack在启动服务器时打包文件
+    - webpack会生成hash文件,由服务器在渲染时替换变量
+  - 添加了注册功能
+  - 移除部分不再依赖的lib
+  - 更为严格的eslintrc配置
