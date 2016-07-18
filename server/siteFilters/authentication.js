@@ -6,9 +6,9 @@
  */
 module.exports = (req, res, next)=> {
   if (req.session.user) {
-    next();
+    next()
   } else {
-    console.log(`access denied for ${req.session.id}.`);
-    res.redirect('/login');
+    console.log(`access denied for ${req.session.id}.`)
+    res.redirect('/login')
   }
-};
+}

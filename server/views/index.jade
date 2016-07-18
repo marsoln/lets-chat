@@ -65,9 +65,9 @@ block content
                     i.fa.fa-comments
               .box-body
                 .direct-chat-messages
-                  .direct-chat-msg.animated.slideInUp(data-ng-class="{right:!chatItem.isMine}",data-ng-repeat='chatItem in viewData.chatQueue track by $index')
+                  .direct-chat-msg.animated.fadeIn(data-ng-class="{right:!chatItem.isMine}",data-ng-repeat='chatItem in viewData.chatQueue track by $index')
                     img.direct-chat-img(data-ng-src="{{chatItem.sender.avatar}}")
-                    span.direct-chat-name.pull-right(data-ng-if="!chatItem.isMine",style="line-height: 2.5rem;padding: 5px;") {{chatItem.sender.name}}
+                    span.direct-chat-name.pull-right(data-ng-if="!chatItem.isMine",style="line-height: 2.5rempadding: 5px") {{chatItem.sender.name}}
                     .direct-chat-text {{chatItem.message}}
                     .direct-chat-info.clearfix
                       span.direct-chat-timestap(data-ng-class="{'pull-right':chatItem.isMine,'pull-left':!chatItem.isMine}") {{chatItem.createTime|date:'yyyy-MM-dd hh:mm'}}
@@ -84,15 +84,10 @@ block content
                   input.form-control(type="text",placeholder="say hello to others...",data-ng-model="viewData.sendContent")
                   span.input-group-btn
                     button.btn.btn-success.btn-flat(data-ng-click='sendMessage()') (╭￣3￣)╭<span class="text-blue" >♡</span>
-      .main-footer <strong>Copyright &copy; 2015 <a href="http://github.com/marsoln">Marsoln</a>.</strong> All rights reserved.
-    script(src="lib/jquery-1.10.2.min.js")
-    script(src="lib/angular.min.js")
-    script(src="socket.io/socket.io.js")
+      .main-footer <strong>Copyright &copy 2015 <a href="http://github.com/marsoln">Marsoln</a>.</strong> All rights reserved.
     script.
       __currentUser = {
         name: '#{username}',
         avatar: '#{avatar}'
-      };
-    script(src="lib/bootstrap.min.js")
-    script(src="lib/lte.min.js")
-    script(src="dist/scripts/main.min.js")
+      }    
+    script(src='dist/scripts/#{mainFile}')
