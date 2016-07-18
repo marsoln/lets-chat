@@ -1,0 +1,22 @@
+extends _layout
+block content
+  body.hold-transition.login-page
+    .container
+      .login-logo
+        a
+          span.text-danger.animated.bounceInDown <strong>Marsoln</strong>'s exLab
+      .login-box-body
+        form(method='post',action='/register')
+          p.text-red #{error}
+          .form-group.has-feedback
+            input.form-control(type='text',name='username',placeholder='用户名')
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password',name='password',placeholder='密码')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password',name='confirmpwd',placeholder='确认密码')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .row
+            .col-xs-12
+              button.btn.btn-info.btn-block 注册
