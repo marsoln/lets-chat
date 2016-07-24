@@ -4,6 +4,7 @@
 
 ## 使用说明
 
+- 首先安装并启动mongoDB和redis-windows服务 
 - 安装依赖 `npm i`
 - 启动服务器 `npm start`
 - 访问 `http://localhost`
@@ -27,3 +28,10 @@
   - 添加了注册功能
   - 移除部分不再依赖的lib
   - 更为严格的eslintrc配置
+
+## 未来更新计划
+
+ - 添加单元测试
+ - 将现有server修改为基于graphQL的数据feeder server
+ - 将web框架由ng1.x更改为react
+ - 添加react-native android的示例
