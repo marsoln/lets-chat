@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LexingSoftware/NodeDataServer.git"
+    "url": "git+https://github.com/marsoln/LetsBlahBlah.git"
   },
   "author": "Marsoln",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/LexingSoftware/NodeDataServer/issues"
+    "url": "https://github.com/marsoln/LetsBlahBlah/issues"
   },
-  "homepage": "https://github.com/LexingSoftware/NodeDataServer#readme",
+  "homepage": "https://github.com/marsoln/LetsBlahBlah#readme",
   "dependencies": {
     "admin-lte": "^2.3.5",
     "angular": "^1.2.28",
