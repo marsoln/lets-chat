@@ -38,6 +38,9 @@ router.post('/', (req, res) => {
         UserModel.findOne({
             username: name
         }, (err, user) => {
+            if (err) {
+                handler(err)
+            }
             if (user) {
                 handler(new Error('用户名已存在.'))
             } else {
