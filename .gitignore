@@ -1,8 +1,9 @@
-/node_modules
-/.idea
+node_modules/
+.idea/
 *.xml
-/.sass-cache
+.sass-cache/
 /demo
+public/dist/
 **/dist/**.*
 npm-debug.log
 hashBundleInfo.json
