@@ -5,6 +5,7 @@ gulp.task('preProcCss', () => {
   return sass
     .render({
       file: 'src/styles/style.scss',
-      outFile: 'public/dist/styles/style.css'
+      outFile: 'public/dist/styles/style.css',
+      outputStyle: 'compressed'
     })
 })
