@@ -1,7 +1,10 @@
-require('jquery')
+import jQuery from 'jquery'
 import initFunc from './scripts/index'
+window.$ = window.jQuery = jQuery
+
 initFunc(jQuery)
-require('socket.io-client')
+import io from 'socket.io-client'
+window.io = io
 
 require('bootstrap')
 require('admin-lte')
