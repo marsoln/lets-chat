@@ -4,6 +4,6 @@ node_modules/
 .sass-cache/
 /demo
 public/dist/
-**/dist/**.*
+dist/
 npm-debug.log
 hashBundleInfo.json
