@@ -1,8 +1,8 @@
 'use strict'
 var router = require('express').Router()
 var securityPass = require('../../framework/security/pass')
-var UserModel = require('../../core/model/demoUser')
-
+var getUserModel = require('../../core/models/demoUser')
+var UserModel = getUserModel()
 router.get('/', (req, res) => {
     let msg = req.session.error
     req.session.error = ''

@@ -1,7 +1,7 @@
-var UserModel = require('../../core/model/demoUser')
+var getUserModel = require('../../core/models/demoUser')
+var UserModel = getUserModel()
 var router = require('express').Router()
 var authentication = require('../siteFilters/authentication')
-// var contentTypes = require('../siteFilters/contentTypes')
 
 // router.use(contentTypes.json)
 /**
@@ -9,11 +9,12 @@ var authentication = require('../siteFilters/authentication')
  */
 router.use(authentication)
 
+
 // List
 router.get('/', function (req, res, next) {
   UserModel.find(req.query, function (err, docs) {
     if (!err) {
-      res.send(docs.toJson())
+      res.send(docs)
     } else {
       next(err)
     }
