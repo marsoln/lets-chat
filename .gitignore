@@ -7,3 +7,4 @@ public/dist/
 dist/
 npm-debug.log
 hashBundleInfo.json
+.vscode/

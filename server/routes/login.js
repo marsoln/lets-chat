@@ -1,11 +1,10 @@
 'use strict'
 var router = require('express').Router()
-// var contentTypes = require('../siteFilters/contentTypes')
 var securityPass = require('../../framework/security/pass')
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var UserModel = require('../../core/model/demoUser')
-
+var getUserModel = require('../../core/models/demoUser')
+var UserModel = getUserModel()
 var __authenticate = (name, pass, fn) => {
 	console.log(`验证用户${name}身份..`)
 	UserModel.findOne({

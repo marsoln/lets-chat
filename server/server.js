@@ -1,12 +1,12 @@
-var _port = process.env.PORT || 80
+const PORT = process.env.PORT || 80
 var express = require('express')
+var graphqlHTTP = require('express-graphql')
 var app = express()
 var path = require('path')
 var server = require('http').createServer(app)
 var socketServerBootstrap = require('./socketServer/bootstrap')
 var sessionModule = require('../framework/redis/session')
 var favicon = require('serve-favicon')
-// var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var userRoutes = require('./routes/demoUsers')
@@ -14,11 +14,14 @@ var indexRoutes = require('./routes/index')
 var loginRoutes = require('./routes/login')
 var registerRoutes = require('./routes/register')
 
+var schema = require('./schema/default')
+
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 app.use(express.static(__dirname + '/../public'))
 app.use(favicon(__dirname + '/../public/favicon.ico'))
+
 // --filters--
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -26,21 +29,30 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cookieParser())
 app.use(sessionModule.registry)
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   if (!req.session) {
     return next(new Error('session missed.'))
   }
   next()
 })
+
+// --graphql--
+app.use('/graphql', graphqlHTTP(request => ({
+  schema: schema,
+  context: request.session,
+  graphiql: true
+})))
+
 // --routes--
 app.use('/login', loginRoutes)
 app.use('/', indexRoutes)
 app.use('/users', userRoutes)
 app.use('/register', registerRoutes)
-// --debug--
-// app.use(logger('dev'))
+
+// --error handler--
 app.use(require('./siteFilters/notFound'))
 app.use(require('./siteFilters/serverError'))
+
 // 启动socketService
 socketServerBootstrap(server)
 
@@ -49,7 +61,7 @@ server.on('error', (error) => {
     throw error
   }
 
-  var bind = typeof _port === 'string' ? 'Pipe ' + _port : 'Port ' + _port
+  var bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -65,6 +77,7 @@ server.on('error', (error) => {
       throw error
   }
 })
-server.listen(_port, () => {
-  console.log(`socket server listened on ${_port}`)
+
+server.listen(PORT, () => {
+  console.log(`socket server listened on ${PORT}`)
 })

@@ -1,7 +1,6 @@
 var router = require('express').Router()
 var authentication = require('../siteFilters/authentication')
 var fs = require('fs')
-// var contentTypes = require('../siteFilters/contentTypes')
 
 /**
  * 登录身份认证
