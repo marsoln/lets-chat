@@ -1,7 +1,6 @@
 var _graphql = require('graphql')
-var getUserModel = require('../../core/models/demoUser')
+var getUserModel = require('../../../../core/models/demoUser')
 var UserModel = getUserModel()
-// var graphql = _graphql.graphql
 var GraphQLSchema = _graphql.GraphQLSchema
 var GraphQLObjectType = _graphql.GraphQLObjectType
 var GraphQLString = _graphql.GraphQLString

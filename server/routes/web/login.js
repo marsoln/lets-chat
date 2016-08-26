@@ -1,9 +1,9 @@
 'use strict'
 var router = require('express').Router()
-var securityPass = require('../../framework/security/pass')
+var securityPass = require('../../../framework/security/pass')
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var getUserModel = require('../../core/models/demoUser')
+var getUserModel = require('../../../core/models/demoUser')
 var UserModel = getUserModel()
 var __authenticate = (name, pass, fn) => {
 	console.log(`验证用户${name}身份..`)
@@ -37,6 +37,11 @@ router.get('/', (req, res) => {
 		title: 'welcome to quarrel site.',
 		error: msg
 	})
+})
+
+// mobile login
+router.post('/m', urlencodedParser, (req, res) => {
+	
 })
 
 router.post('/', urlencodedParser, (req, res) => {
