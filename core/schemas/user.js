@@ -51,4 +51,5 @@ const UserSchema = mongoose.Schema({
         'default': Date.now()
     }
 })
+
 module.exports = UserSchema

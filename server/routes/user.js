@@ -1,14 +1,6 @@
 var getUserModel = require('../../core/models/demoUser')
 var UserModel = getUserModel()
 var router = require('express').Router()
-var authentication = require('../siteFilters/authentication')
-
-// router.use(contentTypes.json)
-/**
- * 身份验证
- */
-router.use(authentication)
-
 
 // List
 router.get('/', function (req, res, next) {

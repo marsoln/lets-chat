@@ -1,11 +1,11 @@
 var _graphql = require('graphql')
 var getUserModel = require('../../core/models/demoUser')
 var UserModel = getUserModel()
-var graphql = _graphql.graphql,
-    GraphQLSchema = _graphql.GraphQLSchema,
-    GraphQLObjectType = _graphql.GraphQLObjectType,
-    GraphQLString = _graphql.GraphQLString,
-    GraphQLList = _graphql.GraphQLList
+// var graphql = _graphql.graphql
+var GraphQLSchema = _graphql.GraphQLSchema
+var GraphQLObjectType = _graphql.GraphQLObjectType
+var GraphQLString = _graphql.GraphQLString
+var GraphQLList = _graphql.GraphQLList
 
 // todo 权限限制
 
@@ -13,13 +13,17 @@ const UserType = new GraphQLObjectType({
     name: 'user',
     description: 'user model',
     fields: {
-        nickname: {
-            type: GraphQLString,
-            resolve: o => o.username
-        },
         id: {
             type: GraphQLString,
             resolve: o => o['_id']
+        },
+        nickname: {
+            type: GraphQLString,
+            resolve: o => o.nickname
+        },
+        username: {
+            type: GraphQLString,
+            resolve: o => o.username
         }
     }
 })
