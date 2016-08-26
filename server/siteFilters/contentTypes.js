@@ -6,4 +6,4 @@ var getHeaderFunc = (type)=> {
 }
 
 exports.html = getHeaderFunc('text/html')
-exports.json = getHeaderFunc('application/jsontext/json')
+exports.json = getHeaderFunc('application/json;text/json')

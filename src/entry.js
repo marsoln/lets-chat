@@ -7,9 +7,9 @@ import io from 'socket.io-client'
 window.io = io
 
 require('bootstrap')
-require('admin-lte')
 
 require('angular')
 import ngBootstrap from './scripts/main'
+require('admin-lte')
 
 ngBootstrap()

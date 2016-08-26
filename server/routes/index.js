@@ -1,11 +1,6 @@
 var router = require('express').Router()
-var authentication = require('../siteFilters/authentication')
 var fs = require('fs')
 
-/**
- * 登录身份认证
- */
-router.use(authentication)
 router.get(['/', '/index'], (req, res) => {
 	res.render('index', {
 		title: '来啊,互相伤害啊!',

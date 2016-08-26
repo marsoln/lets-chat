@@ -1,6 +1,5 @@
 const PORT = process.env.PORT || 80
 var express = require('express')
-var graphqlHTTP = require('express-graphql')
 var app = express()
 var path = require('path')
 var server = require('http').createServer(app)
@@ -9,12 +8,7 @@ var sessionModule = require('../framework/redis/session')
 var favicon = require('serve-favicon')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var userRoutes = require('./routes/demoUsers')
-var indexRoutes = require('./routes/index')
-var loginRoutes = require('./routes/login')
-var registerRoutes = require('./routes/register')
-
-var schema = require('./schema/default')
+var routeMap = require('./routes/RouteMap')
 
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
@@ -36,22 +30,7 @@ app.use((req, res, next) => {
   next()
 })
 
-// --graphql--
-app.use('/graphql', graphqlHTTP(request => ({
-  schema: schema,
-  context: request.session,
-  graphiql: true
-})))
-
-// --routes--
-app.use('/login', loginRoutes)
-app.use('/', indexRoutes)
-app.use('/users', userRoutes)
-app.use('/register', registerRoutes)
-
-// --error handler--
-app.use(require('./siteFilters/notFound'))
-app.use(require('./siteFilters/serverError'))
+routeMap.init(app)
 
 // 启动socketService
 socketServerBootstrap(server)
