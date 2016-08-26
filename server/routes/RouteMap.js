@@ -1,15 +1,17 @@
 var router = require('express').Router()
-var userRoutes = require('./user')
-var indexRoutes = require('./index')
-var loginRoutes = require('./login')
-var registerRoutes = require('./register')
-var schema = require('../schema/default')
 var authInseption = require('../siteFilters/authentication').authInseption
-var graphqlRoutes = require('express-graphql')(req => ({
-    schema: schema,
-    context: req.session,
-    graphiql: true
-}))
+
+// --- web actions ---
+var userRoutes = require('./web/user')
+var indexRoutes = require('./web/index')
+var loginRoutes = require('./web/login')
+var registerRoutes = require('./web/register')
+
+// --- graphql service ---
+var graphqlRoutes = require('./graphql/index')
+
+// --- mobile actions ---
+
 
 exports.init = function (app) {
     // --routes--
@@ -20,8 +22,9 @@ exports.init = function (app) {
     app.use('/', authInseption(indexRoutes))
     app.use('/users', authInseption(userRoutes))
     app.use('/graphql', authInseption(graphqlRoutes))
+    
 
     // --error handler--
-    app.get('*', require('../siteFilters/notFound'))
-    app.use(require('../siteFilters/serverError'))
+    app.get('*', require('../errors/notFound'))
+    app.use(require('../errors/serverError'))
 }
