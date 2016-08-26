@@ -2,7 +2,7 @@
 
 ## 使用说明
 
-- 首先安装并启动mongoDB和redis-windows服务 
+- **首先安装并启动mongoDB和redis-windows服务** 
 - 安装依赖 `npm i`
 - 启动服务器 `npm start`
 - 访问 `http://localhost`
@@ -17,7 +17,6 @@
 - 1.2 代码质量工具和问题修复
   - 添加eslint
   - 修复应用开启会打开两个数据库连接的问题
-  - 添加graffiti(但是没有跑起来)
 - 1.3 更改开发环境配置
   - 将gulp-ruby-sass切换为node-sass
   - 添加webpack
@@ -26,10 +25,24 @@
   - 添加了注册功能
   - 移除部分不再依赖的lib
   - 更为严格的eslintrc配置
+- 1.4 服务器端调整
+  - 添加Graphql的支持
+  - 重新实现了身份验证机制
+  - 改变js文件打包顺序,修复页面带有滚动条的bug
 
-## 未来更新计划
+## 关于这个repo
 
- - 添加单元测试
- - 将现有server修改为基于graphQL的数据feeder server
- - 将web框架由ng1.x更改为react
- - 添加react-native android的示例
+- 一般情况下能跑起来(只保证在windows环境下)
+- 业余时间近乎于纯手工撸出来的 
+  - 免不了有bug 
+  - 进度相当缓慢
+  - 缺失文档
+- 我会尽量做好前端工程化的部分
+- 当前版本的技术栈包括但不限于
+  - ng1.x bootstrap AdminLTE jade
+  - jquery lodash
+  - mongodb mongoose
+  - redis(session)
+  - nodejs express graphql-express socket.io
+  - gulp webpack babel node-sass eslint
+  

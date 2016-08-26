@@ -32,7 +32,5 @@ const authInseption = (nextFunc) => {
   }
 }
 
-module.exports = {
-  authInseption,
-  authentication
-}
+exports.authInseption = authInseption
+exports.authentication = authentication
