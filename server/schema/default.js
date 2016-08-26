@@ -24,6 +24,10 @@ const UserType = new GraphQLObjectType({
         username: {
             type: GraphQLString,
             resolve: o => o.username
+        },
+        age: {
+            type: GraphQLString,
+            resolve: o => o.age
         }
     }
 })
