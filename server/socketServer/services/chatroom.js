@@ -25,8 +25,6 @@ module.exports = function (socket) {
       numUsers: numUsers
     })
 
-    console.log(`user ${userInfo.name} has loggin`)
-
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       user: socket.user,
