@@ -1,4 +1,7 @@
 'use strict'
+
+const DEFAULT_AVATAR = 'http://192.168.1.3/images/avatar_default.jpg'
+
 var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var getUserModel = require('../../../core/models/demoUser')
@@ -55,7 +58,7 @@ router.post('/', (req, res) => {
                             username: name,
                             salt: salt,
                             hash: hash,
-                            avatar: 'images/avatar_default.jpg'
+                            avatar: DEFAULT_AVATAR
                         }
                         var userModel = UserModel(user)
                         userModel.save((err, newUser) => {

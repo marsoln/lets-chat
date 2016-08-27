@@ -1,17 +1,19 @@
-'use strict'
 var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var getUserModel = require('../../../core/models/demoUser')
+var logger = require('../../logger/Logger')
 var UserModel = getUserModel()
+var resDispatcher = require('../../dispatchers/response')
+
 var __authenticate = (name, pass, fn) => {
-	console.log(`验证用户${name}身份..`)
+	logger(`验证用户${name}身份..`)
 	UserModel.findOne({
 		username: name
 	}, (err, user) => {
 		if (err) {
-			console.log(err)
+			logger(err)
 		}
 		if (user) {
 			securityPass.hash(pass, user.salt, (err, hash) => {
@@ -21,6 +23,7 @@ var __authenticate = (name, pass, fn) => {
 				if (hash.toString() === user.hash) {
 					return fn(null, user)
 				} else {
+					logger(`用户 ${name} 使用错误密码登录.`)
 					return fn(new Error('密码错误.'))
 				}
 			})
@@ -34,14 +37,9 @@ router.get('/', (req, res) => {
     let msg = req.session.error
     req.session.error = ''
 	res.render('login', {
-		title: 'welcome to quarrel site.',
+		title: 'Welcome ^-^',
 		error: msg
 	})
-})
-
-// mobile login
-router.post('/m', urlencodedParser, (req, res) => {
-	
 })
 
 router.post('/', urlencodedParser, (req, res) => {
@@ -50,18 +48,32 @@ router.post('/', urlencodedParser, (req, res) => {
 		__authenticate(req.body.username, req.body.password, function (err, user) {
 			var sess = req.session
 			if (!err && user) {
+				logger(`用户 ${user.username} 已登录`)
 				sess.regenerate(() => {
 					req.session.user = user
-					res.redirect('/index')
+					resDispatcher('loginSuccess', req, res, user)
 				})
 			} else {
-				sess.error = err.message
-				res.redirect('/login')
+				resDispatcher('loginFailed', req, res, err.message)
 			}
 		})
 	} else {
-		sess.error = '用户名密码不能为空'
-		res.redirect('/login')
+		resDispatcher('loginFailed', req, res, '用户名密码不能为空')
+	}
+})
+
+// check user login status
+router.get('/state', (req, res) => {
+	let result = null
+	let _currUser = req.session.user
+	if (_currUser) {
+		resDispatcher('loginSuccess', req, res, {
+			id: _currUser._id,
+			username: _currUser.username,
+			avatar: _currUser.avatar
+		})
+	} else {
+		resDispatcher('loginFailed', req, res, null)
 	}
 })
 

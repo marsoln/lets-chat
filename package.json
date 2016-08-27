@@ -6,8 +6,9 @@
   "scripts": {
     "test": "eslint server src core framework",
     "prestart": "eslint server src core framework & gulp preProcCss & webpack",
-    "start": "nodemon server/server.js",
-    "server": "nodemon server/start.js"
+    "start": "SET NODE_ENV=PRODUCT & node server/server.js",
+    "debug": "SET NODE_ENV=DEV & npm run startDebug",
+    "startDebug": "nodemon server/start.js"
   },
   "repository": {
     "type": "git",
