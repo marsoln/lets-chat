@@ -67,10 +67,10 @@ block content
                 .direct-chat-messages
                   .direct-chat-msg.animated.fadeIn(data-ng-class="{right:!chatItem.isMine}",data-ng-repeat='chatItem in viewData.chatQueue track by $index')
                     img.direct-chat-img(data-ng-src="{{chatItem.sender.avatar}}")
-                    span.direct-chat-name.pull-right(data-ng-if="!chatItem.isMine",style="line-height: 2.5rempadding: 5px") {{chatItem.sender.name}}
                     .direct-chat-text {{chatItem.message}}
                     .direct-chat-info.clearfix
                       span.direct-chat-timestap(data-ng-class="{'pull-right':chatItem.isMine,'pull-left':!chatItem.isMine}") {{chatItem.createTime|date:'yyyy-MM-dd hh:mm'}}
+                      span.direct-chat-name.pull-right(data-ng-if="!chatItem.isMine") {{chatItem.sender.name}}
                 .direct-chat-contacts
                   ul.contacts-list
                     li(data-ng-if='viewData.contactQueue.length==0') (′・ω・`) 没人勾搭你
