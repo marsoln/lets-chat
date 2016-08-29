@@ -1,4 +1,7 @@
 export default () => {
+
+  const SERVICE_NAME_PREFIX = 'chatroom-'
+
   angular
     .module('chatApp', [])
     .controller('chatCtrl', ['$scope', '$timeout', function (scope, $timeout) {
@@ -12,7 +15,7 @@ export default () => {
         if (connected) {
           if (!typing) {
             typing = true
-            socket.emit('typing')
+            socket.emit(SERVICE_NAME_PREFIX + 'typing')
           }
           lastTypingTime = (new Date()).getTime()
 
@@ -20,7 +23,7 @@ export default () => {
             var typingTimer = (new Date()).getTime()
             var timeDiff = typingTimer - lastTypingTime
             if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
-              socket.emit('stop typing')
+              socket.emit(SERVICE_NAME_PREFIX + 'stop typing')
               typing = false
             }
           }, TYPING_TIMER_LENGTH)
@@ -38,7 +41,7 @@ export default () => {
         updateTyping()
       })
 
-      socket.on('login', function (data) {
+      socket.on(SERVICE_NAME_PREFIX + 'login', function (data) {
         connected = true
         scope.notify({
           content: '欢迎来到聊天室',
@@ -47,14 +50,14 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
-      socket.on('new message', function (message) {
+      socket.on(SERVICE_NAME_PREFIX + 'new message', function (message) {
         scope.viewData.chatQueue.push(message)
         $timeout(function () {
           $('.direct-chat-messages').scrollTop(99999)
         }, 1)
         scope.$digest()
       })
-      socket.on('user joined', function (data) {
+      socket.on(SERVICE_NAME_PREFIX + 'user joined', function (data) {
         scope.notify({
           content: data.user.name + '来打酱油了...',
           icon: 'fa-user-plus'
@@ -62,7 +65,7 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
-      socket.on('user left', function (data) {
+      socket.on(SERVICE_NAME_PREFIX + 'user left', function (data) {
         scope.notify({
           content: data.user.name + '妈妈喊他回家吃饭了...',
           icon: 'fa-hand-peace-o'
@@ -70,11 +73,11 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
-      socket.on('typing', function (data) {
+      socket.on(SERVICE_NAME_PREFIX + 'typing', function (data) {
         scope.addChatTyping(data)
         scope.$digest()
       })
-      socket.on('stop typing', function (data) {
+      socket.on(SERVICE_NAME_PREFIX + 'stop typing', function (data) {
         scope.removeChatTyping(data)
         scope.$digest()
       })
@@ -120,13 +123,13 @@ export default () => {
        * 发送消息
        */
       scope.sendMessage = function () {
-        socket.emit('stop typing')
+        socket.emit(SERVICE_NAME_PREFIX + 'stop typing')
         typing = false
         if (scope.viewData.sendContent != '') {
           var message = {
             message: scope.viewData.sendContent
           }
-          socket.emit('new message', message)
+          socket.emit(SERVICE_NAME_PREFIX + 'new message', message)
           message.isMine = true
           message.sender = scope.currentUser
           message.createTime = new Date()
@@ -152,7 +155,7 @@ export default () => {
         scope.removeLog(data['_id'])
       }
 
-      socket.emit('add user', scope.currentUser)
+      socket.emit(SERVICE_NAME_PREFIX + 'add user', scope.currentUser)
     }])
 
 }

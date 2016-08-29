@@ -7,9 +7,9 @@ const STATES = {
 }
 
 module.exports = {
-    SUCCESS: (data) => { return { type: STATES.SUCCESS, data: data } },
-    FAIL: (data) => { return { type: STATES.FAIL, data: data } },
-    WARNING: (data) => { return { type: STATES.WARNING, data: data } },
-    UNAUTHENTICATED: (data) => { return { type: STATES.UNAUTHENTICATED, data: data } },
-    INTERNAL_ERR: (data) => { return { type: STATES.INTERNAL_ERR, data: data } },
+    SUCCESS: (_data) => { return { type: STATES.SUCCESS, data: _data } },
+    FAIL: (_data) => { return { type: STATES.FAIL, data: _data } },
+    WARNING: (_data) => { return { type: STATES.WARNING, data: _data } },
+    UNAUTHENTICATED: (_data) => { return { type: STATES.UNAUTHENTICATED, data: _data } },
+    INTERNAL_ERR: (_data) => { return { type: STATES.INTERNAL_ERR, data: _data } },
 }
