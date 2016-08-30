@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-const UserSchema = mongoose.Schema({
+module.exports = mongoose.Schema({
     username: {
         type: String,
         required: true
@@ -51,5 +51,3 @@ const UserSchema = mongoose.Schema({
         'default': Date.now()
     }
 })
-
-module.exports = UserSchema

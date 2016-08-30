@@ -1,5 +1,4 @@
-var getUserModel = require('../../../core/models/demoUser')
-var UserModel = getUserModel()
+var UserModel = require('../../../core/models').user()
 var router = require('express').Router()
 
 // List

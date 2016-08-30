@@ -1,14 +1,11 @@
 var _graphql = require('graphql')
-var getUserModel = require('../../../../core/models/demoUser')
-var UserModel = getUserModel()
+var UserModel = require('../../../../core/models').user()
 var GraphQLSchema = _graphql.GraphQLSchema
 var GraphQLObjectType = _graphql.GraphQLObjectType
 var GraphQLString = _graphql.GraphQLString
 var GraphQLList = _graphql.GraphQLList
 var GraphQLInt = _graphql.GraphQLInt
 var GraphQLNonNull = _graphql.GraphQLNonNull
-
-// todo 权限限制
 
 const UserType = new GraphQLObjectType({
     name: 'user',

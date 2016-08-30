@@ -2,9 +2,8 @@ var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var getUserModel = require('../../../core/models/demoUser')
 var logger = require('../../logger/Logger')
-var UserModel = getUserModel()
+var UserModel = require('../../../core/models').user()
 var resDispatcher = require('../../dispatchers/response')
 
 var __authenticate = (name, pass, fn) => {
