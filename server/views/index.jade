@@ -39,6 +39,9 @@ block content
                         a <i class="fa {{notification.icon}} text-aqua"></i> {{notification.content}}
                   li.footer
                     a 查看所有
+              li.dropdown.notifications-menu
+                a(href='/logout')
+                  i.fa.fa-power-off(style="color:#e23a3a;")
       aside.main-sidebar
         section.sidebar(style='height:auto')
           .user-panel
@@ -84,7 +87,7 @@ block content
                   input.form-control(type="text",placeholder="say hello to others...",data-ng-model="viewData.sendContent")
                   span.input-group-btn
                     button.btn.btn-success.btn-flat(data-ng-click='sendMessage()') (╭￣3￣)╭<span class="text-blue" >♡</span>
-      .main-footer <strong>Copyright &copy 2015 <a href="http://github.com/marsoln">Marsoln</a>.</strong> All rights reserved.
+      .main-footer <strong>Copyright &copy 2015 - 2018 <a href="http://github.com/marsoln">Marsoln</a>.</strong> All rights reserved.
     script.
       __currentUser = {
         name: '#{username}',

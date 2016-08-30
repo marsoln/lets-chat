@@ -6,6 +6,8 @@ var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var getUserModel = require('../../../core/models/demoUser')
 var UserModel = getUserModel()
+var resDispatcher = require('../../dispatchers/response')
+
 router.get('/', (req, res) => {
     let msg = req.session.error
     req.session.error = ''
@@ -24,11 +26,14 @@ router.post('/', (req, res) => {
         if (!err && user) {
             sess.regenerate(() => {
                 req.session.user = user
-                res.redirect('/index')
+                resDispatcher('registerSuccess', req, res, {
+                    username: user.username,
+                    avatar: user.avatar,
+                    id: user._id,
+                })
             })
         } else {
-            sess.error = err.message
-            res.redirect(`/register`)
+            resDispatcher('registerFailed', req, res, err.message)
         }
     }
 
