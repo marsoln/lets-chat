@@ -68,16 +68,15 @@ router.post('/', urlencodedParser, (req, res) => {
 
 // check user login status
 router.get('/state', (req, res) => {
-	let result = null
 	let _currUser = req.session.user
 	if (_currUser) {
-		resDispatcher('loginSuccess', req, res, {
+		resDispatcher('loginStateSuccess', req, res, {
 			id: _currUser._id,
 			username: _currUser.username,
 			avatar: _currUser.avatar
 		})
 	} else {
-		resDispatcher('loginFailed', req, res, null)
+		resDispatcher('loginStateFailed', req, res, null)
 	}
 })
 
