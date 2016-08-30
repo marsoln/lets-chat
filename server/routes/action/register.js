@@ -4,8 +4,7 @@ const DEFAULT_AVATAR = '/images/avatar_default.jpg'
 
 var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
-var getUserModel = require('../../../core/models/demoUser')
-var UserModel = getUserModel()
+var UserModel = require('../../../core/models').user()
 var resDispatcher = require('../../dispatchers/response')
 
 router.get('/', (req, res) => {
