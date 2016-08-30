@@ -4,8 +4,8 @@
 
 - **首先安装并启动mongoDB和redis-windows服务** 
 - 安装依赖 `npm i`
-- 启动服务器 `npm start`
-- 访问 `http://localhost`
+- 启动正式服务器 `npm start` 开发环境 `npm run debug`
+- 访问 `http://localhost` 是主页 `http://localhost/graphql` 是`graphiql`
 
 ## 版本变更信息
 
@@ -29,6 +29,10 @@
   - 添加Graphql的支持
   - 重新实现了身份验证机制
   - 改变js文件打包顺序,修复页面带有滚动条的bug
+- 1.5 服务器端调整
+  - 为支持手机端的登录注册做了些调整 添加了dispatcher
+  - 为支持多个schema 调整数据库连接的提供方式
+  - 为支持多个套接字服务 给每个service添加了一个前缀 
 
 ## 关于这个repo
 - 我使用到是 `nodejs 6.4.0` 如果你用低版本的nodejs环境可能会遇到一些ES6语法的兼容性问题 稍作修改就可以了
