@@ -51,7 +51,11 @@ router.post('/', urlencodedParser, (req, res) => {
 				logger(`用户 ${user.username} 已登录`)
 				sess.regenerate(() => {
 					req.session.user = user
-					resDispatcher('loginSuccess', req, res, user)
+					resDispatcher('loginSuccess', req, res, {
+						username: user.username,
+						avatar: user.avatar,
+						id: user._id,
+					})
 				})
 			} else {
 				resDispatcher('loginFailed', req, res, err.message)
