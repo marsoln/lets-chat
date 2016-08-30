@@ -5,6 +5,8 @@ var GraphQLSchema = _graphql.GraphQLSchema
 var GraphQLObjectType = _graphql.GraphQLObjectType
 var GraphQLString = _graphql.GraphQLString
 var GraphQLList = _graphql.GraphQLList
+var GraphQLInt = _graphql.GraphQLInt
+var GraphQLNonNull = _graphql.GraphQLNonNull
 
 // todo 权限限制
 
@@ -31,6 +33,34 @@ const UserType = new GraphQLObjectType({
         avatar: {
             type: GraphQLString,
             resolve: o => o.avatar
+        },
+        birthday: {
+            type: GraphQLString,
+            resolve: o => o.birthday
+        },
+        address: {
+            type: GraphQLString,
+            resolve: o => o.address
+        },
+        hometown: {
+            type: GraphQLString,
+            resolve: o => o.hometown
+        },
+        city: {
+            type: GraphQLString,
+            resolve: o => o.city
+        },
+        phone: {
+            type: GraphQLString,
+            resolve: o => o.phone
+        },
+        email: {
+            type: GraphQLString,
+            resolve: o => o.email
+        },
+        gender: {
+            type: GraphQLInt,
+            resolve: o => o.gender
         }
     }
 })
