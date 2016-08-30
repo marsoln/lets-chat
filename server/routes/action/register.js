@@ -1,6 +1,6 @@
 'use strict'
-
-const DEFAULT_AVATAR = 'http://192.168.1.3/images/avatar_default.jpg'
+//const SERVER = 'http://192.168.1.3'
+const DEFAULT_AVATAR = '/images/avatar_default.jpg'
 
 var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')

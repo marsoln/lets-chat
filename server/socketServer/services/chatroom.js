@@ -1,6 +1,7 @@
 'use strict'
 let numUsers = 0
 const SERVICE_NAME_PREFIX = 'chatroom-'
+var logger = require('../../logger/Logger')
 
 module.exports = function (socket) {
   var __added = false
@@ -15,6 +16,9 @@ module.exports = function (socket) {
 
   // when the client emits 'add user', this listens and executes
   socket.on(`${SERVICE_NAME_PREFIX}add user`, function (userInfo) {
+    
+    logger(`${userInfo['name']} 进入聊天室`)
+
     if (__added) return
 
     // we store the username in the socket session for this client
@@ -50,6 +54,9 @@ module.exports = function (socket) {
 
   // when the user disconnects.. perform this
   socket.on(`${SERVICE_NAME_PREFIX}disconnect`, function () {
+    
+    logger(`${socket.user['name']} 退出聊天室`)
+
     if (__added) {
       --numUsers
 
