@@ -156,6 +156,10 @@ export default () => {
       }
 
       socket.emit(SERVICE_NAME_PREFIX + 'add user', scope.currentUser)
+
+      scope.$on('$destroy', function () {
+        socket.emit()(`${SERVICE_NAME_PREFIX}disconnect`, scope.currentUser)
+      })
     }])
 
 }

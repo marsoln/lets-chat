@@ -3,7 +3,7 @@
  * @returns {Function}
  */
 
-var logger = require('../logger/Logger')
+var logger = require('../../framework/logger/Logger')
 module.exports = function (err, req, res, next) {
   logger(err)
   res.status(404)

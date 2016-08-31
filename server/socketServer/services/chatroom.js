@@ -1,10 +1,18 @@
 'use strict'
-let numUsers = 0
+let numUsers = '根本不知道几个'//0
 const SERVICE_NAME_PREFIX = 'chatroom-'
-var logger = require('../../logger/Logger')
+var logger = require('../../../framework/logger/Logger')
+let socketPool = []
 
-module.exports = function (socket) {
+setInterval(() => {
+  socketPool.filter(skt => !skt.user).forEach(socket=>socket.broadcast.emit())
+}, 3000)
+
+let generateSocketInstance = function (socket) {
+  logger('创建套接字???')
   var __added = false
+  socketPool[socketPool.length] = socket
+
   socket.on(`${SERVICE_NAME_PREFIX}new message`, function (data) {
     var msgData = {
       sender: socket.user,
@@ -16,14 +24,14 @@ module.exports = function (socket) {
 
   // when the client emits 'add user', this listens and executes
   socket.on(`${SERVICE_NAME_PREFIX}add user`, function (userInfo) {
-    
+
     logger(`${userInfo['name']} 进入聊天室`)
 
     if (__added) return
 
     // we store the username in the socket session for this client
     socket.user = userInfo
-    ++numUsers
+    // ++numUsers
     __added = true
 
     socket.emit(`${SERVICE_NAME_PREFIX}login`, {
@@ -54,11 +62,11 @@ module.exports = function (socket) {
 
   // when the user disconnects.. perform this
   socket.on(`${SERVICE_NAME_PREFIX}disconnect`, function () {
-    
+
     logger(`${socket.user['name']} 退出聊天室`)
 
     if (__added) {
-      --numUsers
+      // --numUsers
 
       // echo globally that this client has left
       socket.broadcast.emit(`${SERVICE_NAME_PREFIX}user left`, {
@@ -68,3 +76,5 @@ module.exports = function (socket) {
     }
   })
 }
+
+module.exports = generateSocketInstance

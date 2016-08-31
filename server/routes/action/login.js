@@ -2,7 +2,7 @@ var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var logger = require('../../logger/Logger')
+var logger = require('../../../framework/logger/Logger')
 var UserModel = require('../../../core/models').user()
 var resDispatcher = require('../../dispatchers/response')
 
@@ -50,11 +50,7 @@ router.post('/', urlencodedParser, (req, res) => {
 				logger(`用户 ${user.username} 已登录`)
 				sess.regenerate(() => {
 					req.session.user = user
-					resDispatcher('loginSuccess', req, res, {
-						username: user.username,
-						avatar: user.avatar,
-						id: user._id,
-					})
+					resDispatcher('loginSuccess', req, res, user)
 				})
 			} else {
 				resDispatcher('loginFailed', req, res, err.message)
@@ -69,11 +65,7 @@ router.post('/', urlencodedParser, (req, res) => {
 router.get('/state', (req, res) => {
 	let _currUser = req.session.user
 	if (_currUser) {
-		resDispatcher('loginStateSuccess', req, res, {
-			id: _currUser._id,
-			username: _currUser.username,
-			avatar: _currUser.avatar
-		})
+		resDispatcher('loginStateSuccess', req, res, _currUser)
 	} else {
 		resDispatcher('loginStateFailed', req, res, null)
 	}
