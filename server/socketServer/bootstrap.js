@@ -1,11 +1,17 @@
-module.exports = function(server) {
+/**
+ * 我一开始想把这里设计成多个socket服务的形式
+ * 但是后来发现不能在子服务中优雅的处理过期的socket链接
+ * 我需要设计模式!
+ * to Redesign
+ */
+module.exports = function (server) {
   var io = require('socket.io')(server)
   // 需要挂载的处理模块
   var _moduleHandlersToBeAmounted = ['chatroom']
 
-  io.on('connection', function(socket) {
-    for (var i = 0; i < _moduleHandlersToBeAmounted.length; i++) {
-      require(`./services/${_moduleHandlersToBeAmounted[i]}`)(socket)
-    }
+  io.on('connection', function (socket) {
+    _moduleHandlersToBeAmounted.map(moduleName => {
+      require(`./services/${moduleName}`)(socket)
+    })
   })
 }

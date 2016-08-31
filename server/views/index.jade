@@ -60,8 +60,8 @@ block content
           .col-xs-12
             .box.box-info.direct-chat.direct-chat-info
               .box-header.with-border
-                h3.box-title {{chatroom.name}} (当前在线:{{viewData.numUsers}})
-                .log-container
+                h3.box-title.pull-left 当前在线:{{viewData.numUsers}}
+                .log-container.pull-left
                   code(data-ng-repeat="log in viewData.logInfo") {{log.content}}
                 .box-tools.pull-right
                   button.btn.btn-box-tool(data-placement="left",data-toggle="tooltip",title="私聊",data-widget="chat-pane-toggle")

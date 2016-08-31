@@ -1,8 +1,17 @@
 let {SUCCESS, FAIL, UNAUTHENTICATED} = require('./mobileData')
-var logger = require('../logger/Logger')
+var logger = require('../../framework/logger/Logger')
 
 var isMobileRequest = function (req) {
     return !!req.headers['os']
+}
+
+let mobileSimpleUserModel = (user) => {
+    return {
+        username: user.username,
+        nickname: user.nickname,
+        avatar: user.avatar,
+        id: user._id,
+    }
 }
 
 var mobileHandler = function (action, req, res, data) {
@@ -21,7 +30,7 @@ var mobileHandler = function (action, req, res, data) {
         case 'loginSuccess':
         case 'loginStateSuccess':
         case 'registerSuccess':
-            res.send(SUCCESS(data))
+            res.send(SUCCESS(mobileSimpleUserModel(data)))
             break
         case 'registerFailed':
             res.send(FAIL(data))

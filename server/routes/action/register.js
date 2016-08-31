@@ -1,11 +1,10 @@
 'use strict'
-//const SERVER = 'http://192.168.1.3'
-const DEFAULT_AVATAR = '/images/avatar_default.jpg'
 
 var router = require('express').Router()
 var securityPass = require('../../../framework/security/pass')
 var UserModel = require('../../../core/models').user()
 var resDispatcher = require('../../dispatchers/response')
+var avatarGen = require('../../../framework/utils/avatarGenerator')
 
 router.get('/', (req, res) => {
     let msg = req.session.error
@@ -25,11 +24,7 @@ router.post('/', (req, res) => {
         if (!err && user) {
             sess.regenerate(() => {
                 req.session.user = user
-                resDispatcher('registerSuccess', req, res, {
-                    username: user.username,
-                    avatar: user.avatar,
-                    id: user._id,
-                })
+                resDispatcher('registerSuccess', req, res, user)
             })
         } else {
             resDispatcher('registerFailed', req, res, err.message)
@@ -62,11 +57,13 @@ router.post('/', (req, res) => {
                             username: name,
                             salt: salt,
                             hash: hash,
-                            avatar: DEFAULT_AVATAR
+                            nickname: name,
+                            avatar: '/avatars/' + name + '.png'
                         }
                         var userModel = UserModel(user)
                         userModel.save((err, newUser) => {
                             if (!err) {
+                                avatarGen(name)
                                 handler(null, newUser)
                             } else {
                                 handler(new Error('用户创建失败.'))

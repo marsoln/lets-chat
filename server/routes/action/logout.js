@@ -1,5 +1,5 @@
 var router = require('express').Router()
-var logger = require('../../logger/Logger')
+var logger = require('../../../framework/logger/Logger')
 var resDispatcher = require('../../dispatchers/response')
 
 router.get('/', (req, res) => {
