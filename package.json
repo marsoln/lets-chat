@@ -9,7 +9,8 @@
     "start": "SET NODE_ENV=PRODUCT & node server/server.js",
     "rebuild": "gulp preProcCss & webpack",
     "debug": "SET NODE_ENV=DEV & npm run startDebug",
-    "startDebug": "nodemon server/start.js"
+    "startDebug": "nodemon server/start.js",
+    "hodor": "SET NODE_ENV=DEV & node server/start.js"
   },
   "repository": {
     "type": "git",
