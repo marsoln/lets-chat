@@ -11,6 +11,7 @@ const authentication = (req, res) => {
   } else if (req.headers['x-requested-with'] && req.headers['x-requested-with'].toLowerCase() == 'xmlhttprequest' ||
     /(json)+/g.test(req.headers['accept'])) { // 判断是否异步请求 带有x-request-with为xmlhttprequest的请求头或者accept含有json
     if (/^\/graphql/.test(req.url)) {
+      console.log(req.url)
       resDispatcher('unauthenticated', req, res, 'graphql查询需要一个合法的身份.')
       return false
     } else {

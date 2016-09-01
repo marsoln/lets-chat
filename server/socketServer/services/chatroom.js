@@ -9,7 +9,7 @@ setInterval(() => {
 }, 3000)
 
 let generateSocketInstance = function (socket) {
-  logger('创建套接字???')
+  logger('创建套接字')
   var __added = false
   socketPool[socketPool.length] = socket
 
