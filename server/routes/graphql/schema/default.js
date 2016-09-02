@@ -1,14 +1,15 @@
-var _graphql = require('graphql')
-var UserModel = require('../../../../core/models').user()
-var GraphQLSchema = _graphql.GraphQLSchema
-var GraphQLObjectType = _graphql.GraphQLObjectType
-var GraphQLString = _graphql.GraphQLString
-var GraphQLList = _graphql.GraphQLList
-var GraphQLInt = _graphql.GraphQLInt
-var GraphQLNonNull = _graphql.GraphQLNonNull
-var GraphQLBoolean = _graphql.GraphQLBoolean
+let UserModel = require('../../../../core/models').user()
+let {
+    GraphQLSchema,
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLList,
+    GraphQLInt,
+    GraphQLNonNull,
+    GraphQLBoolean,
+} = require('graphql')
 
-const UserType = new GraphQLObjectType({
+let UserType = new GraphQLObjectType({
     name: 'user',
     description: 'user model',
     fields: {
@@ -62,34 +63,8 @@ const UserType = new GraphQLObjectType({
         }
     }
 })
-
-/**
- * 其实这个挺操蛋的 
- * 因为json本来就是k-v形式的数据体 
- * 完全可以接受一个string然后JSON.parse 之后作为update的参数
- * 那么问题来了为什么还要建一个k-v-pair的type呢
- * 为了练练手啊 
- * 仅此而已!!!
- * */
-const KVPair = new GraphQLObjectType({
-    name: 'KeyValuePair',
-    description: '键值对啊',
-    fields: {
-        key: {
-            type: GraphQLString,
-            require: true,
-        },
-        value: {
-            type: GraphQLString,
-            require: true,
-        }
-    }
-})
-
-const UserListType = new GraphQLList(UserType)
-const UpdateCollection = new GraphQLList(KVPair)
-
-var schema = new GraphQLSchema({
+let UserListType = new GraphQLList(UserType)
+let schema = new GraphQLSchema({
     query: new GraphQLObjectType({
         name: 'UsersQuery',
         description: '查询用户信息',

@@ -3,9 +3,10 @@
  * @returns {Function}
  */
 
-var logger = require('../../framework/logger/Logger')
-module.exports = function (err, req, res, next) {
-  logger(err)
+let logger = require('../../framework/logger/Logger')
+
+module.exports = (req, res, next) => {
+  logger('not found!')
   res.status(404)
   res.send({
     error: 'Not Found'

@@ -1,7 +1,9 @@
-let {SUCCESS, FAIL, UNAUTHENTICATED} = require('./mobileData')
-var logger = require('../../framework/logger/Logger')
-
-var isMobileRequest = function (req) {
+let {
+    SUCCESS,
+    FAIL,
+    UNAUTHENTICATED
+} = require('./mobileData')
+const IS_FROM_MOBILE = function (req) {
     return !!req.headers['os']
 }
 
@@ -14,15 +16,16 @@ let mobileSimpleUserModel = (user) => {
     }
 }
 
-var mobileHandler = function (action, req, res, data) {
-    logger(`mobile >>>${action}<<<`)
+let mobileHandler = function (action, req, res, data) {
     switch (action) {
         case 'logout':
             res.send(SUCCESS(data))
             break
-        case 'unauthenticated':
+        case 'unauthenticatedGraphql':
             res.send(UNAUTHENTICATED(data))
             break
+        case 'unauthenticated':
+        case 'unauthenticatedAjax':
         case 'loginFailed':
         case 'loginStateFailed':
             res.send(FAIL(data))
@@ -38,15 +41,23 @@ var mobileHandler = function (action, req, res, data) {
     }
 }
 
-var webHandler = function (action, req, res, err) {
+let webHandler = function (action, req, res, err) {
     switch (action) {
         case 'logout':
         case 'loginFailed':
-        case 'unauthenticated':
         case 'loginStateFailed':
             if (err)
                 req.session.error = err
             res.redirect('/login')
+            break
+        case 'unauthenticatedGraphql':
+            res.send(UNAUTHENTICATED(err))
+            break
+        case 'unauthenticatedAjax':
+            res.send(err)
+            break
+        case 'unauthenticated':
+            res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`)  // 重定向到登录页
             break
         case 'registerSuccess':
         case 'loginSuccess':
@@ -62,7 +73,7 @@ var webHandler = function (action, req, res, err) {
 }
 
 module.exports = function (action, req, res, data) {
-    if (isMobileRequest(req)) {
+    if (IS_FROM_MOBILE(req)) {
         mobileHandler(...arguments)
     } else {
         webHandler(...arguments)

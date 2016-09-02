@@ -5,34 +5,21 @@ var resDispatcher = require('../dispatchers/response')
  * @param req
  * @param res
  */
-const authentication = (req, res) => {
+module.exports = (req, res, next) => {
   if (req.session.user) {
-    return true
+    next()
   } else if (req.headers['x-requested-with'] && req.headers['x-requested-with'].toLowerCase() == 'xmlhttprequest' ||
     /(json)+/g.test(req.headers['accept'])) { // 判断是否异步请求 带有x-request-with为xmlhttprequest的请求头或者accept含有json
     if (/^\/graphql/.test(req.url)) {
-      console.log(req.url)
-      resDispatcher('unauthenticated', req, res, 'graphql查询需要一个合法的身份.')
-      return false
+      resDispatcher('unauthenticatedGraphql', req, res, 'graphql查询需要一个合法的身份.')
     } else {
-      res.send(null)
-      return false
+      resDispatcher('unauthenticatedAjax', req, res, null)
     }
   } else {
     if (req.url === '/register') {  // 注册可以匿名访问
-      return true
+      next()
     } else {
-      res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`)  // 重定向到登录页
-      return false
+      resDispatcher(`unauthenticated`, req, res, null)
     }
   }
 }
-
-const authInseption = (nextFunc) => {
-  return (req, res, next) => {
-    authentication(req, res) && nextFunc(req, res, next)
-  }
-}
-
-exports.authInseption = authInseption
-exports.authentication = authentication

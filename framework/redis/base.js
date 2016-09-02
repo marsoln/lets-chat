@@ -1,6 +1,6 @@
 'use strict'
-var redis = require('redis')
-var propReader = require('properties-reader')('server.properties')
+let redis = require('redis')
+let propReader = require('properties-reader')('server.properties')
 let client = redis.createClient(propReader.get('redisServer.port'), propReader.get('redisServer.ip'), {})
 
 client
