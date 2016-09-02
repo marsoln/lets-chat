@@ -1,6 +1,6 @@
-var session = require('express-session')
-var RedisStore = require('connect-redis')(session)
-var client = require('./base')
+let session = require('express-session')
+let RedisStore = require('connect-redis')(session)
+let client = require('./base')
 
 /**
  * register the redis-session-storage middleware for the server application

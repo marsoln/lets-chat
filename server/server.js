@@ -1,14 +1,14 @@
 const PORT = process.env.PORT || 80
-var express = require('express')
-var app = express()
-var path = require('path')
-var server = require('http').createServer(app)
-var socketServerBootstrap = require('./socketServer/bootstrap')
-var sessionModule = require('../framework/redis/session')
-var favicon = require('serve-favicon')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var routeMap = require('./routes/RouteMap')
+let express = require('express')
+let app = express()
+let path = require('path')
+let server = require('http').createServer(app)
+let socketServerBootstrap = require('./socketServer/boot')
+let sessionModule = require('../framework/redis/session')
+let favicon = require('serve-favicon')
+let cookieParser = require('cookie-parser')
+let bodyParser = require('body-parser')
+let routeMap = require('./routes/RouteMap')
 
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
@@ -40,7 +40,7 @@ server.on('error', (error) => {
     throw error
   }
 
-  var bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT
+  let bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
