@@ -1,5 +1,5 @@
-var gulp = require('gulp')
-var sass = require('node-sass')
+let gulp = require('gulp')
+let sass = require('node-sass')
 
 gulp.task('preProcCss', () => {
   return sass

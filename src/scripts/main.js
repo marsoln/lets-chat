@@ -6,12 +6,12 @@ export default () => {
     .module('chatApp', [])
     .controller('chatCtrl', ['$scope', '$timeout', function (scope, $timeout) {
       const TYPING_TIMER_LENGTH = 600
-      var socket = io()
-      var connected = false
-      var typing = false
-      var lastTypingTime
-      var $inputMessage = $('input[data-ng-model="viewData.sendContent"]')
-      var updateTyping = function () {
+      let socket = io()
+      let connected = false
+      let typing = false
+      let lastTypingTime
+      let $inputMessage = $('input[data-ng-model="viewData.sendContent"]')
+      let updateTyping = function () {
         if (connected) {
           if (!typing) {
             typing = true
@@ -20,8 +20,8 @@ export default () => {
           lastTypingTime = (new Date()).getTime()
 
           setTimeout(function () {
-            var typingTimer = (new Date()).getTime()
-            var timeDiff = typingTimer - lastTypingTime
+            let typingTimer = (new Date()).getTime()
+            let timeDiff = typingTimer - lastTypingTime
             if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
               socket.emit(SERVICE_NAME_PREFIX + 'stop typing')
               typing = false
@@ -103,7 +103,7 @@ export default () => {
       }
 
       scope.removeLog = function (id) {
-        var _index = 0
+        let _index = 0
         while (_index < scope.viewData.logInfo.length) {
           if (scope.viewData.logInfo[_index]['_id'] === id) {
             break
@@ -126,7 +126,7 @@ export default () => {
         socket.emit(SERVICE_NAME_PREFIX + 'stop typing')
         typing = false
         if (scope.viewData.sendContent != '') {
-          var message = {
+          let message = {
             message: scope.viewData.sendContent
           }
           socket.emit(SERVICE_NAME_PREFIX + 'new message', message)

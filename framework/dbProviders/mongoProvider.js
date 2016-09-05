@@ -1,6 +1,8 @@
-var mongoose = require('mongoose')
-var propReader = require('properties-reader')('server.properties')
-var db = mongoose.createConnection(propReader.get('dbServer.ip'), propReader.get('dbServer.name'))
+let mongoose = require('mongoose')
+let propReader = require('properties-reader')('server.properties')
+let db = mongoose.createConnection(propReader.get('dbServer.ip'), propReader.get('dbServer.name'))
+
+mongoose.Promise = global.Promise
 
 // 成功链接数据库
 db.once('open', function () {

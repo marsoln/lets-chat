@@ -1,5 +1,5 @@
-var router = require('express').Router()
-var fs = require('fs')
+let router = require('express').Router()
+let fs = require('fs')
 
 router.get(['/', '/index'], (req, res) => {
 	res.render('index', {

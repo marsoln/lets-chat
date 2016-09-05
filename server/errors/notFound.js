@@ -6,7 +6,7 @@
 let logger = require('../../framework/logger/Logger')
 
 module.exports = (req, res, next) => {
-  logger('not found!')
+  logger('404,not found!')
   res.status(404)
   res.send({
     error: 'Not Found'

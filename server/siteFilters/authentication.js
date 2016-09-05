@@ -1,4 +1,4 @@
-var resDispatcher = require('../dispatchers/response')
+let resDispatcher = require('../dispatchers/response')
 
 /**
  * 基本用户身份验证模块

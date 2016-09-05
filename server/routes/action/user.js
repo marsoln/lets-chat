@@ -1,5 +1,5 @@
-var UserModel = require('../../../core/models').user()
-var router = require('express').Router()
+let UserModel = require('../../../core/models').user()
+let router = require('express').Router()
 
 // List
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/:id', function (req, res, next) {
 
 // Create
 router.post('/', function (req, res, next) {
-  var user = new UserModel(req.body)
+  let user = new UserModel(req.body)
   user.save(function (err) {
     if (!err) {
       res.statusCode = 201
@@ -38,10 +38,10 @@ router.post('/', function (req, res, next) {
 
 // Update
 router.put('/:id', function (req, res, next) {
-  var body = req.body
+  let body = req.body
   UserModel.findById(req.params.id, function (err, user) {
     if (!err) {
-      for (var p in body) {
+      for (let p in body) {
         if (body.hasOwnProperty(p)) {
           user[p] = body[p]
         }

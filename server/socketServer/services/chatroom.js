@@ -1,7 +1,7 @@
 'use strict'
 let numUsers = '根本不知道几个'//0
 const SERVICE_NAME_PREFIX = 'chatroom-'
-var logger = require('../../../framework/logger/Logger')
+let logger = require('../../../framework/logger/Logger')
 let socketPool = []
 
 setInterval(() => {
@@ -10,11 +10,11 @@ setInterval(() => {
 
 let generateSocketInstance = function (socket) {
   logger('创建套接字')
-  var __added = false
+  let __added = false
   socketPool[socketPool.length] = socket
 
   socket.on(`${SERVICE_NAME_PREFIX}new message`, function (data) {
-    var msgData = {
+    let msgData = {
       sender: socket.user,
       createTime: new Date(),
       message: data.message

@@ -5,9 +5,9 @@
  * to Redesign
  */
 module.exports = function (server) {
-  var io = require('socket.io')(server)
+  let io = require('socket.io')(server)
   // 需要挂载的处理模块
-  var _moduleHandlersToBeAmounted = ['chatroom']
+  let _moduleHandlersToBeAmounted = ['chatroom']
 
   io.on('connection', function (socket) {
     _moduleHandlersToBeAmounted.map(moduleName => {
