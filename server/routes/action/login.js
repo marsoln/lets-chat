@@ -1,12 +1,12 @@
-var router = require('express').Router()
-var securityPass = require('../../../framework/security/pass')
-var bodyParser = require('body-parser')
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var logger = require('../../../framework/logger/Logger')
-var UserModel = require('../../../core/models').user()
-var resDispatcher = require('../../dispatchers/response')
+let router = require('express').Router()
+let securityPass = require('../../../framework/security/pass')
+let bodyParser = require('body-parser')
+let urlencodedParser = bodyParser.urlencoded({ extended: false })
+let logger = require('../../../framework/logger/Logger')
+let UserModel = require('../../../core/models').user()
+let resDispatcher = require('../../dispatchers/response')
 
-var __authenticate = (name, pass, fn) => {
+let __authenticate = (name, pass, fn) => {
 	logger(`验证用户${name}身份..`)
 	UserModel.findOne({
 		username: name
@@ -45,7 +45,7 @@ router.post('/', urlencodedParser, (req, res) => {
 	'use strict'
 	if (req.body.username.trim() !== '' && req.body.password.trim() !== '') {
 		__authenticate(req.body.username, req.body.password, function (err, user) {
-			var sess = req.session
+			let sess = req.session
 			if (!err && user) {
 				logger(`用户 ${user.username} 已登录`)
 				sess.regenerate(() => {

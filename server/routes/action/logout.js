@@ -1,6 +1,6 @@
-var router = require('express').Router()
-var logger = require('../../../framework/logger/Logger')
-var resDispatcher = require('../../dispatchers/response')
+let router = require('express').Router()
+let logger = require('../../../framework/logger/Logger')
+let resDispatcher = require('../../dispatchers/response')
 
 router.get('/', (req, res) => {
     let user = req.session.user

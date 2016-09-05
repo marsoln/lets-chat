@@ -1,10 +1,10 @@
 'use strict'
 
-var router = require('express').Router()
-var securityPass = require('../../../framework/security/pass')
-var UserModel = require('../../../core/models').user()
-var resDispatcher = require('../../dispatchers/response')
-var avatarGen = require('../../../framework/utils/avatarGenerator')
+let router = require('express').Router()
+let securityPass = require('../../../framework/security/pass')
+let UserModel = require('../../../core/models').user()
+let resDispatcher = require('../../dispatchers/response')
+let avatarGen = require('../../../framework/utils/avatarGenerator')
 
 router.get('/', (req, res) => {
     let msg = req.session.error
@@ -53,14 +53,14 @@ router.post('/', (req, res) => {
                         handler(err)
                     } else {
                         // 加密成功 存储用户数据
-                        var user = {
+                        let user = {
                             username: name,
                             salt: salt,
                             hash: hash,
                             nickname: name,
                             avatar: '/avatars/' + name + '.png'
                         }
-                        var userModel = UserModel(user)
+                        let userModel = UserModel(user)
                         userModel.save((err, newUser) => {
                             if (!err) {
                                 avatarGen(name)

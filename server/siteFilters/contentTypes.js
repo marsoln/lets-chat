@@ -1,4 +1,4 @@
-var getHeaderFunc = (type)=> {
+let getHeaderFunc = (type)=> {
   return (req, res, next)=> {
     res.header('Content-Type', type)
     next()

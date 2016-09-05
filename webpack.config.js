@@ -1,6 +1,6 @@
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var path = require('path')
+let webpack = require('webpack')
+let HtmlWebpackPlugin = require('html-webpack-plugin')
+let path = require('path')
 
 module.exports = {
     entry: './src/entry.js',
