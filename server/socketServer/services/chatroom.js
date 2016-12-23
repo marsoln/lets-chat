@@ -1,4 +1,3 @@
-'use strict'
 let numUsers = '根本不知道几个' // 0
 const SERVICE_NAME_PREFIX = 'chatroom-'
 let logger = require('../../../framework/logger/Logger')
