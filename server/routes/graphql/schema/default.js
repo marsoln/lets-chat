@@ -4,8 +4,8 @@ let {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLInt,
-    GraphQLNonNull,
+    // GraphQLInt,
+    // GraphQLNonNull,
     GraphQLBoolean,
 } = require('graphql')
 

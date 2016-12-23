@@ -3,7 +3,7 @@ let {
     FAIL,
     UNAUTHENTICATED
 } = require('./mobileData')
-const IS_FROM_MOBILE = function (req) {
+const IS_FROM_MOBILE = function(req) {
     return !!req.headers['os']
 }
 
@@ -16,7 +16,7 @@ let mobileSimpleUserModel = (user) => {
     }
 }
 
-let mobileHandler = function (action, req, res, data) {
+let mobileHandler = function(action, req, res, data) {
     switch (action) {
         case 'logout':
             res.send(SUCCESS(data))
@@ -41,13 +41,14 @@ let mobileHandler = function (action, req, res, data) {
     }
 }
 
-let webHandler = function (action, req, res, err) {
+let webHandler = function(action, req, res, err) {
     switch (action) {
         case 'logout':
         case 'loginFailed':
         case 'loginStateFailed':
-            if (err)
+            if (err) {
                 req.session.error = err
+            }
             res.redirect('/login')
             break
         case 'unauthenticatedGraphql':
@@ -57,7 +58,7 @@ let webHandler = function (action, req, res, err) {
             res.send(err)
             break
         case 'unauthenticated':
-            res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`)  // 重定向到登录页
+            res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`) // 重定向到登录页
             break
         case 'registerSuccess':
         case 'loginSuccess':
@@ -65,14 +66,15 @@ let webHandler = function (action, req, res, err) {
             res.redirect('/index')
             break
         case 'registerFailed':
-            if (err)
+            if (err) {
                 req.session.error = err
+            }
             res.redirect('/register')
             break
     }
 }
 
-module.exports = function (action, req, res, data) {
+module.exports = function(action, req, res, data) {
     if (IS_FROM_MOBILE(req)) {
         mobileHandler(...arguments)
     } else {
