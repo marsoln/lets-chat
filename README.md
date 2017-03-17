@@ -35,6 +35,7 @@
   - 为支持多个套接字服务 给每个service添加了一个前缀 
 - 1.6 生成用户头像
   - 真是头疼
+- 1.7 添加expose-loader的引用
 
 ## 关于这个repo
 - 我使用到是 `nodejs 6.4.0` 如果你用低版本的nodejs环境可能会遇到一些ES6语法的兼容性问题 稍作修改就可以了
@@ -52,4 +53,6 @@
   - redis(session)
   - nodejs express graphql-express socket.io
   - gulp webpack babel node-sass eslint
+
+## 最近有点迷茫,暂时停更了
   
