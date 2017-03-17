@@ -1,19 +1,19 @@
 'use strict'
-let numUsers = '根本不知道几个'//0
+let numUsers = '根本不知道几个' // 0
 const SERVICE_NAME_PREFIX = 'chatroom-'
 let logger = require('../../../framework/logger/Logger')
 let socketPool = []
 
 setInterval(() => {
-  socketPool.filter(skt => !skt.user).forEach(socket=>socket.broadcast.emit())
+  socketPool.filter(skt => !skt.user).forEach(socket => socket.broadcast.emit())
 }, 3000)
 
-let generateSocketInstance = function (socket) {
+let generateSocketInstance = function(socket) {
   logger('创建套接字')
   let __added = false
   socketPool[socketPool.length] = socket
 
-  socket.on(`${SERVICE_NAME_PREFIX}new message`, function (data) {
+  socket.on(`${SERVICE_NAME_PREFIX}new message`, function(data) {
     let msgData = {
       sender: socket.user,
       createTime: new Date(),
@@ -23,7 +23,7 @@ let generateSocketInstance = function (socket) {
   })
 
   // when the client emits 'add user', this listens and executes
-  socket.on(`${SERVICE_NAME_PREFIX}add user`, function (userInfo) {
+  socket.on(`${SERVICE_NAME_PREFIX}add user`, function(userInfo) {
 
     logger(`${userInfo['name']} 进入聊天室`)
 
@@ -31,7 +31,7 @@ let generateSocketInstance = function (socket) {
 
     // we store the username in the socket session for this client
     socket.user = userInfo
-    // ++numUsers
+      // ++numUsers
     __added = true
 
     socket.emit(`${SERVICE_NAME_PREFIX}login`, {
@@ -46,7 +46,7 @@ let generateSocketInstance = function (socket) {
   })
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on(`${SERVICE_NAME_PREFIX}typing`, function () {
+  socket.on(`${SERVICE_NAME_PREFIX}typing`, function() {
     socket.broadcast.emit(`${SERVICE_NAME_PREFIX}typing`, {
       user: socket.user,
       _id: socket.id
@@ -54,14 +54,14 @@ let generateSocketInstance = function (socket) {
   })
 
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on(`${SERVICE_NAME_PREFIX}stop typing`, function () {
+  socket.on(`${SERVICE_NAME_PREFIX}stop typing`, function() {
     socket.broadcast.emit(`${SERVICE_NAME_PREFIX}stop typing`, {
       _id: socket.id
     })
   })
 
   // when the user disconnects.. perform this
-  socket.on(`${SERVICE_NAME_PREFIX}disconnect`, function () {
+  socket.on(`${SERVICE_NAME_PREFIX}disconnect`, function() {
 
     logger(`${socket.user['name']} 退出聊天室`)
 
