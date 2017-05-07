@@ -2,7 +2,8 @@
 
 ## 使用说明
 
-- **首先安装并启动mongoDB和redis-windows服务以及在c:/program files目录下安装ImageMagick(不要问我为什么 问我我也不说)** 
+- **首先安装并启动mongoDB和redis-windows服务以及在c:/program files目录下安装ImageMagick** 
+  - 详细使用参见 `./framework/utils/avatarGenerator.js`
 - 安装依赖 `npm i`
 - 启动正式服务器 `npm start` 开发环境 `npm run debug`
 - 访问 `http://localhost` 是主页 `http://localhost/graphql` 是`graphiql`
@@ -38,21 +39,20 @@
 - 1.7 添加expose-loader的引用
 
 ## 关于这个repo
-- 我使用到是 `nodejs 6.4.0` 如果你用低版本的nodejs环境可能会遇到一些ES6语法的兼容性问题 稍作修改就可以了
-- 一般情况下能跑起来(只保证在windows环境下)
-- 业余时间近乎于纯手工撸出来的 
-  - 免不了有bug 
-  - 进度相当缓慢
-  - 缺失文档
-- 我会尽量保证前端工程化的部分
-- 服务器端的CI流程可能稍微晚几个版本再加入进来,因为我暂时还不打算把它挂到ECS
-- 当前版本的技术栈包括但不限于
-  - ng1.x bootstrap AdminLTE jade
-  - jquery lodash
-  - mongodb mongoose
-  - redis(session)
-  - nodejs express graphql-express socket.io
-  - gulp webpack babel node-sass eslint
 
-## 最近有点迷茫,暂时停更了
-  
+- 使用的是 `nodejs @ 6.4.0` 如果你用低版本的nodejs环境可能会遇到一些ES6语法的兼容性问题 稍作修改就可以了
+  - 免不了有bug, feel free to commit issuses plz
+  - 进度相当缓慢,全看心情
+  - 缺失文档,后边会考虑用jsdoc生成文档
+- 我会尽量保证前端工程化的部分
+- 服务器端的CI流程可能稍微晚几个版本再加入进来,因为暂时还没有打算把它挂到ECS玩
+
+## 最近的打算
+
+- 升级到webpack 2+
+- 移除过气的玩意儿
+  - gulp 任务管理 (完全使用 webpack 替代)
+  - angularjs 1.x (替换成 react)
+  - node-sass (切换成 postcss 和 css-next)
+  - bootstrap (可能会用基于 react 的 material-ui)
+  - jade
