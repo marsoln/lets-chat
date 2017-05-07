@@ -4,7 +4,7 @@ import initFunc from './scripts/index'
 
 initFunc(jQuery)
 import io from 'socket.io-client'
-// window.io = io
+window.io = io
 
 require('bootstrap')
 

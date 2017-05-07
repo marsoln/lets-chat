@@ -1,5 +1,4 @@
 let webpack = require('webpack')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
 let path = require('path')
 
 module.exports = {
@@ -15,7 +14,9 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015']
+                    presets: [
+                        'es2015'
+                    ]
                 }
             },
             {
@@ -27,30 +28,21 @@ module.exports = {
                 loader: 'expose?io'
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            comments: false
+        }),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        function () {
+            this.plugin('done', function (stats) {
+                require('fs').writeFileSync(
+                    path.join(__dirname, 'server', 'hashBundleInfo.json'),
+                    JSON.stringify(stats.toJson()))
+            })
+        }
+    ]
 }
-
-module.exports.plugins = [
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        },
-        comments: false
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    function () {
-        // this.plugin("done", function (stats) {
-        //     let hashedFileName = stats.assetsByChunkName.main
-        //     console.log(hashedFileName)
-        //     require('fs').OpenFileSync(
-        //         path.join(__dirname, 'server/views', 'index.jade'),
-        //         (err, stream)
-        //     )
-        // })
-        this.plugin('done', function (stats) {
-            require('fs').writeFileSync(
-                path.join(__dirname, 'server', 'hashBundleInfo.json'),
-                JSON.stringify(stats.toJson()))
-        })
-    }
-]
