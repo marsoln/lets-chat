@@ -1,7 +1,7 @@
 import initFunc from './scripts/index'
 import jQuery from 'jquery'
 import io from 'socket.io-client'
-import style from './styles/style.scss'
+require('./styles/style.scss')
 
 window.jQuery = window.$ = jQuery
 window.io = io
