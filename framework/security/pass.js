@@ -18,6 +18,7 @@ let len = 128
 
 let iterations = 12000
 
+let digest = 'sha512'
 /**
  * Hashes a password with optional `salt`, otherwise
  * generate a salt for `pass` and invoke `fn(err, salt, hash)`.
@@ -30,13 +31,13 @@ let iterations = 12000
 
 exports.hash = function (pwd, salt, fn) {
   if (arguments.length === 3) {
-    crypto.pbkdf2(pwd, salt, iterations, len, fn)
+    crypto.pbkdf2(pwd, salt, iterations, len, digest, fn)
   } else {
     fn = salt
     crypto.randomBytes(len, function (err, salt) {
       if (err) return fn(err)
       salt = salt.toString('base64')
-      crypto.pbkdf2(pwd, salt, iterations, len, function (err, hash) {
+      crypto.pbkdf2(pwd, salt, iterations, len, digest, function (err, hash) {
         if (err) return fn(err)
         fn(null, salt, hash)
       })

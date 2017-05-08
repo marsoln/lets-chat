@@ -1,4 +1,5 @@
-export default ($) => {
+import $ from 'jquery'
+export default () => {
   $('.direct-chat-messages,.direct-chat-contacts').height($(window).height() - 300)
   $.warning = function (content) {
     let $panel = $(warningPanel)

@@ -1,64 +1,72 @@
 {
-  "name": "lets-blah-blah",
+  "name": "lets-chat",
   "version": "1.0.0",
   "description": "玩儿啊",
   "main": "server/server.js",
   "scripts": {
     "test": "eslint server src core framework",
-    "prestart": "eslint server src core framework & gulp preProcCss & webpack",
+    "prestart": "eslint server src core framework & webpack",
     "start": "SET NODE_ENV=PRODUCT & node server/server.js",
-    "rebuild": "gulp preProcCss & webpack",
-    "debug": "SET NODE_ENV=DEV & npm run startDebug",
-    "startDebug": "nodemon server/start.js",
-    "hodor": "SET NODE_ENV=DEV & node server/start.js"
+    "build": "webpack",
+    "dev": "SET NODE_ENV=DEV & nodemon server/start.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marsoln/LetsBlahBlah.git"
+    "url": "git+git@github.com:marsoln/lets-chat.git"
   },
   "author": "Marsoln",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/marsoln/LetsBlahBlah/issues"
-  },
-  "homepage": "https://github.com/marsoln/LetsBlahBlah#readme",
+  "homepage": "https://github.com/marsoln/lets-chat#readme",
   "dependencies": {
     "admin-lte": "^2.3.5",
     "angular": "^1.2.28",
+    "autoprefixer": "^7.0.1",
     "avatar-generator": "^1.0.7",
     "babel": "^6.5.2",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.13.0",
+    "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.14.0",
     "body-parser": "^1.14.2",
     "bootstrap": "^3.3.4",
     "connect-redis": "^3.0.1",
     "cookie-parser": "~1.3.5",
+    "css-loader": "^0.28.1",
     "debug": "~2.2.0",
     "eslint": "^1.10.3",
-    "eslint-plugin-html": "^1.5.1",
-    "expose-loader": "^0.7.1",
     "express": "^4.13.3",
     "express-graphql": "^0.5.3",
     "express-session": "^1.12.1",
     "graphql": "^0.6.2",
-    "gulp": "^3.9.0",
     "html-webpack-plugin": "^2.22.0",
     "jade": "^1.11.0",
     "jquery": "^1.11.1",
     "lodash": "^3.10.1",
     "mongoose": "^4.2.9",
-    "node-sass": "^3.8.0",
+    "postcss-calc": "^5.3.1",
+    "postcss-custom-properties": "^5.0.2",
+    "postcss-global-import": "^1.0.0",
+    "postcss-import": "^9.1.0",
+    "postcss-loader": "^1.3.3",
+    "postcss-nested": "^1.0.1",
+    "postcss-nesting": "^2.3.1",
     "properties-reader": "0.0.13",
     "redis": "^2.4.2",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.4.8",
-    "webpack": "^1.13.1"
+    "style-loader": "^0.17.0",
+    "webpack": "^2.5.1"
   },
   "devDependencies": {
     "nodemon": "^1.10.2"
-  }
+  },
+  "browserList": [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9"
+  ]
 }

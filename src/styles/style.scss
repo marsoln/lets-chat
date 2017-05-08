@@ -1,38 +1,38 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 ul {
-  list-style: none;
-  word-wrap: break-word;
+    list-style: none;
+    word-wrap: break-word;
 }
 
-.callout-warning {
-  position: absolute;
-  width: 80%;
-  margin: 0 10%;
-  z-index: 10;
-  top: 30%;
+:global(.callout-warning) {
+    position: absolute;
+    width: 400px;
+    margin: 0 auto;
+    z-index: 10;
+    top: 30%;
 }
 
-.direct-chat-text {
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
+:global(.direct-chat-text) {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.log-container {
-  padding: 0 0 0 15px;
-  display: inline-block;
-  width: 65%;
-  border: none;
-  background-color: transparent;
-  max-height: 45px;
+:global(.log-container) {
+    padding: 0 0 0 15px;
+    display: inline-block;
+    width: 65%;
+    border: none;
+    background-color: transparent;
+    max-height: 45px;
 }
-

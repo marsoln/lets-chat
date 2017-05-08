@@ -1,32 +1,70 @@
 let webpack = require('webpack')
 let path = require('path')
+const pkg = require('./package.json')
 
 module.exports = {
     entry: './src/entry.js',
     output: {
-        path: './public/dist/scripts',
+        path: path.resolve(__dirname, './public/dist/scripts'),
         filename: '[chunkhash].js',
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js$/,
+                test: /\.js/,
+                loader: 'babel-loader',
+                include: [path.resolve('./src/')],
                 exclude: /node_modules/,
-                loader: 'babel',
                 query: {
+                    babelrc: false,
                     presets: [
-                        'es2015'
-                    ]
+                        [
+                            'env',
+                            {
+                                targets: {
+                                    browsers: pkg.browserList
+                                },
+                                modules: false,
+                                useBuiltIns: false,
+                                debug: false
+                            }
+                        ],
+                        'es2015',
+                        // 'stage-2',
+                        // 'react'
+                    ],
+                    // plugins: [
+                    //     'react-hot-loader/babel',
+                    //     'transform-react-jsx-source',
+                    //     'transform-react-jsx-self'
+                    // ]
                 }
             },
             {
-                test: require.resolve('jquery'),
-                loader: 'expose?$!expose?jQuery'
+                test: /\.s?css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: '[name]-[local]-[hash:base64:5]',
+                            minimize: false,
+                            discardComments: { removeAll: true },
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            config: path.resolve('./postcss.config.js')
+                        },
+                    }
+                ]
             },
-            {
-                test: require.resolve('socket.io-client'),
-                loader: 'expose?io'
-            }
         ]
     },
     plugins: [
@@ -36,7 +74,7 @@ module.exports = {
             },
             comments: false
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         function () {
             this.plugin('done', function (stats) {
                 require('fs').writeFileSync(
