@@ -63,8 +63,9 @@ router.post('/', (req, res) => {
                         let userModel = UserModel(user)
                         userModel.save((err, newUser) => {
                             if (!err) {
-                                avatarGen(name)
-                                handler(null, newUser)
+                                avatarGen(name, 'male', () => {
+                                    handler(null, newUser)
+                                })
                             } else {
                                 handler(new Error('用户创建失败.'))
                             }

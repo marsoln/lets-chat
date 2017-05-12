@@ -1,6 +1,8 @@
 let router = require('express').Router()
 let mainFilePath = require('../../bundleInfo.json').main
 
+console.log(mainFilePath)
+
 router.get(['/', '/index'], (req, res) => {
 	res.render('index', {
 		title: '来啊,互相伤害啊!',
