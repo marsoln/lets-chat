@@ -10,9 +10,26 @@ let cookieParser = require('cookie-parser')
 let bodyParser = require('body-parser')
 let routeMap = require('./routes/RouteMap')
 
+let webpack = require('webpack')
+let webpackConfig = require('../webpack.config')
+let devMiddleware = require('webpack-dev-middleware')
+let hotMiddleware = require('webpack-hot-middleware')
+
+const __DEV__ = process.env.NODE_ENV !== 'production'
+
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
+
+if (__DEV__) {
+  let compiler = webpack(webpackConfig)
+  app.use(devMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }))
+  app.use(hotMiddleware(compiler))
+}
+
 app.use(express.static(__dirname + '/../public'))
 app.use(favicon(__dirname + '/../public/favicon.ico'))
 

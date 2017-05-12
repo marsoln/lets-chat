@@ -1,7 +1,6 @@
+const SERVICE_NAME_PREFIX = 'chatroom-'
+
 export default () => {
-
-  const SERVICE_NAME_PREFIX = 'chatroom-'
-
   angular
     .module('chatApp', [])
     .controller('chatCtrl', ['$scope', '$timeout', function (scope, $timeout) {
@@ -37,6 +36,10 @@ export default () => {
         }
       }
 
+      scope.clearMsg = function (event) {
+        scope.viewData.notifications = []
+      }
+
       $inputMessage.on('input', function () {
         updateTyping()
       })
@@ -50,6 +53,7 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
+
       socket.on(SERVICE_NAME_PREFIX + 'new message', function (message) {
         scope.viewData.chatQueue.push(message)
         $timeout(function () {
@@ -57,6 +61,7 @@ export default () => {
         }, 1)
         scope.$digest()
       })
+
       socket.on(SERVICE_NAME_PREFIX + 'user joined', function (data) {
         scope.notify({
           content: data.user.name + '来打酱油了...',
@@ -65,6 +70,7 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
+
       socket.on(SERVICE_NAME_PREFIX + 'user left', function (data) {
         scope.notify({
           content: data.user.name + '妈妈喊他回家吃饭了...',
@@ -73,10 +79,12 @@ export default () => {
         scope.viewData.numUsers = data['numUsers']
         scope.$digest()
       })
+
       socket.on(SERVICE_NAME_PREFIX + 'typing', function (data) {
         scope.addChatTyping(data)
         scope.$digest()
       })
+
       socket.on(SERVICE_NAME_PREFIX + 'stop typing', function (data) {
         scope.removeChatTyping(data)
         scope.$digest()
@@ -95,7 +103,7 @@ export default () => {
         logInfo: [],
         contactQueue: [],
         sendContent: '',
-        numUsers: 1
+        numUsers: 1,
       }
 
       scope.log = function (data) {

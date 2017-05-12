@@ -1,19 +1,28 @@
 let webpack = require('webpack')
 let path = require('path')
 const pkg = require('./package.json')
+const __DEV__ = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-    entry: './src/entry.js',
+    entry: [
+        ...__DEV__ ? [
+            'webpack-hot-middleware/client'
+        ] : [],
+        './src/entry.js'
+    ],
     output: {
-        path: path.resolve(__dirname, './public/dist/scripts'),
-        filename: '[chunkhash].js',
+        path: __DEV__ ? '/' : path.resolve(__dirname, './public/dist/scripts'),
+        publicPath: __DEV__ ? '/dist/scripts/' : './public',
+        filename: __DEV__ ? 'main.debug.js' : '[chunkhash].js',
     },
     module: {
         rules: [
             {
                 test: /\.js/,
                 loader: 'babel-loader',
-                include: [path.resolve('./src/')],
+                include: [
+                    path.resolve('./src/')
+                ],
                 exclude: /node_modules/,
                 query: {
                     babelrc: false,
@@ -30,14 +39,7 @@ module.exports = {
                             }
                         ],
                         'es2015',
-                        // 'stage-2',
-                        // 'react'
                     ],
-                    // plugins: [
-                    //     'react-hot-loader/babel',
-                    //     'transform-react-jsx-source',
-                    //     'transform-react-jsx-self'
-                    // ]
                 }
             },
             {
@@ -68,18 +70,24 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            comments: false
-        }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
+        ...__DEV__ ? [
+            new webpack.optimize.OccurrenceOrderPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoEmitOnErrorsPlugin()
+        ] : [
+                new webpack.optimize.UglifyJsPlugin({
+                    compress: {
+                        warnings: false
+                    },
+                    comments: false
+                })
+            ],
         function () {
             this.plugin('done', function (stats) {
+                let _stats = stats.toJson()
                 require('fs').writeFileSync(
-                    path.join(__dirname, 'server', 'hashBundleInfo.json'),
-                    JSON.stringify(stats.toJson()))
+                    path.join(__dirname, 'server', 'bundleInfo.json'),
+                    JSON.stringify(_stats.assetsByChunkName))
             })
         }
     ]

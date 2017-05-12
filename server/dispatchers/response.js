@@ -3,6 +3,7 @@ let {
   FAIL,
   UNAUTHENTICATED
 } = require('./mobileData')
+
 const IS_FROM_MOBILE = function(req) {
   return !!req.headers['os']
 }

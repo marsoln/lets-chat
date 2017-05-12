@@ -1,6 +1,7 @@
+const __DEV__ = process.env.NODE_ENV !== 'production'
 class Logger {
     constructor() {
-        if (~process.env.NODE_ENV.indexOf('DEV')) {
+        if (__DEV__) {
             this.record = function (msg) {
                 console.log(`${new Date().toLocaleString()} - ${msg}`)
             }

@@ -1,0 +1,23 @@
+:global(.callout-warning) {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    z-index: 10;
+}
+
+:global(.direct-chat-text) {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+:global(.log-container) {
+    padding: 0 0 0 15px;
+    display: inline-block;
+    width: 65%;
+    border: none;
+    background-color: transparent;
+    max-height: 45px;
+}

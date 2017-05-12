@@ -38,7 +38,7 @@ block content
                       li(data-ng-repeat='notification in viewData.notifications track by $index')
                         a <i class="fa {{notification.icon}} text-aqua"></i> {{notification.content}}
                   li.footer
-                    a 查看所有
+                    a(data-ng-click='clearMsg()') 清空所有通知
               li.dropdown.notifications-menu
                 a(href='/logout')
                   i.fa.fa-power-off(style="color:#e23a3a;")

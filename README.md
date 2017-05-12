@@ -43,16 +43,15 @@
 - 使用的是 `nodejs @ 6.4.0` 如果你用低版本的nodejs环境可能会遇到一些ES6语法的兼容性问题 稍作修改就可以了
   - 免不了有bug, feel free to commit issuses plz
   - 进度相当缓慢,全看心情
-  - 缺失文档,后边会考虑用jsdoc生成文档
 - 我会尽量保证前端工程化的部分
 - 服务器端的CI流程可能稍微晚几个版本再加入进来,因为暂时还没有打算把它挂到ECS玩
 
 ## 最近的打算
 
-- 升级到webpack 2+
+- 升级到webpack 2+ [done]
 - 移除过气的玩意儿
-  - gulp 任务管理 (完全使用 webpack 替代)
+  - gulp 任务管理 (完全使用 webpack 替代) [done]
   - angularjs 1.x (替换成 react)
-  - node-sass (切换成 postcss 和 css-next)
+  - node-sass (切换成 postcss 和 css-next) [done]
   - bootstrap (可能会用基于 react 的 material-ui)
   - jade
