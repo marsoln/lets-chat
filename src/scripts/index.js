@@ -1,10 +1,12 @@
-import $ from 'jquery'
-let __to = -1
-export default () => {
-  $('.direct-chat-messages,.direct-chat-contacts').height($(window).height() - 300)
-  $.warning = function (content) {
+import jQuery from 'jquery'
 
-    let $panel = $(warningPanel)
+let __to = -1
+
+export default () => {
+  jQuery('.direct-chat-messages,.direct-chat-contacts').height(jQuery(window).height() - 300)
+  jQuery.warning = function (content) {
+
+    let $panel = jQuery(warningPanel)
     $panel.find('.warning-content').html(content)
 
     window.clearTimeout(__to)
@@ -15,9 +17,8 @@ export default () => {
 
     __to = setTimeout(() => {
       $panel.fadeOut(500)
-      // $panel.hide()
     }, 1200)
 
-    $('input[data-ng-model="viewData.sendContent"]').focus()
+    jQuery('input[data-ng-model="viewData.sendContent"]').focus()
   }
 }

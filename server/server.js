@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 8003
 let express = require('express')
 let app = express()
 let path = require('path')
@@ -19,7 +19,7 @@ const __DEV__ = process.env.NODE_ENV !== 'production'
 
 // --view engine--
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
+app.set('view engine', 'pug')
 
 if (__DEV__) {
   let compiler = webpack(webpackConfig)

@@ -54,4 +54,4 @@
   - angularjs 1.x (替换成 react)
   - node-sass (切换成 postcss 和 css-next) [done]
   - bootstrap (可能会用基于 react 的 material-ui)
-  - jade
+  - pug
