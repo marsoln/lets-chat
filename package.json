@@ -39,7 +39,7 @@
     "express-graphql": "^0.5.3",
     "express-session": "^1.15.6",
     "graphql": "^0.6.2",
-    "jquery": "^1.12.4",
+    "jquery": "^3.4.0",
     "lodash": "^3.10.1",
     "mongoose": "^4.13.10",
     "postcss-calc": "^5.3.1",
